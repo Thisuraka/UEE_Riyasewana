@@ -33,6 +33,12 @@ const HintStyle1 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15.0);
 
+const ProfileDataStyle = TextStyle(
+    fontFamily: DefaultFont,
+    color: Colors.white,
+    fontWeight: FontWeight.w500,
+    fontSize: 15.0);
+
 const TextButtonStyle = TextStyle(
   fontFamily: DefaultFont,
   color: Color(0xFFAFB0B1),

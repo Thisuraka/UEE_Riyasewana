@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   String text;
+  double? width = 330.0;
 
-  CustomButton({required this.text});
+  CustomButton({required this.text, this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(bottom: 10),
-        width: 330.0,
+        width: width,
         height: 45.0,
         decoration: BoxDecoration(
             gradient: LinearGradient(
