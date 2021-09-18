@@ -29,10 +29,13 @@ class CustomAppbarWidget extends StatelessWidget {
               style: HeaderStyle,
             ),
       actions: [
-        Image.asset(
-          'assets/icons/search-icon.png',
-          width: 50,
-        ),
+        Container(
+            child: searchIcon
+                ? Image.asset(
+                    'assets/icons/search-icon.png',
+                    width: 50,
+                  )
+                : null),
       ],
     );
   }

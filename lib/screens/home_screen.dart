@@ -35,57 +35,55 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             child: Stack(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(top: 7, left: 6),
-                        child: Text(
-                          "Vehicle Parts",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(top: 7, left: 330),
-                        child: Text(
-                          "See All",
-                          style: SeeAllStyle,
-                        )),
-                    Container(
-                        height: 170,
+                Container(
+                  height: 200,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 20),
+                  child: Stack(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: 6),
+                          child: Text(
+                            "Vehicle Parts",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(left: 330),
+                          child: Text(
+                            "See All",
+                            style: SeeAllStyle,
+                          )),
+                      Container(
+                        height: 130,
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 30),
-                        child: ListView(
+                        // padding: EdgeInsets.only(top: 40),
+                        margin: EdgeInsets.only(top: 25),
+                        child: GridView.count(
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            VerticalCard(
+                          crossAxisCount: 1,
+                          children: List.generate(9, (index) {
+                            return VerticalCard(
                               adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution VI",
+                              adName: "Misubhshi Evolution  " + '$index',
                               adPrice: "Rs. 900000",
-                            ),
-                            VerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution VI",
-                              adPrice: "Rs. 900000",
-                            ),
-                            VerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution VI",
-                              adPrice: "Rs. 900000",
-                            ),
-                          ],
-                        ))
-                  ],
+                            );
+                          }),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   width: double.infinity,
                   height: double.infinity,
-                  margin: EdgeInsets.only(top: 220),
+                  margin: EdgeInsets.only(top: 210),
                   child: Stack(
                     children: [
                       Container(
                           margin: EdgeInsets.only(top: 7, left: 6),
                           child: Text(
                             "Vehicles",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.w900),
                           )),
                       Container(
                           margin: EdgeInsets.only(top: 7, left: 330),
@@ -97,11 +95,13 @@ class HomeScreen extends StatelessWidget {
                           height: double.infinity,
                           width: double.infinity,
                           margin: EdgeInsets.only(top: 30),
-                          // color: Colors.blueAccent,
                           child: GridView.count(
                             crossAxisCount: 2,
-                            children: List.generate(9, (index) {
-                              return Center(
+                            children: List.generate(8, (index) {
+                              return Container(
+                                height: 250,
+                                width: 170,
+                                margin: EdgeInsets.all(4),
                                 child: BigVerticalCard(
                                   adImg: 'assets/images/avatar.jpg',
                                   adName: "Misubhshi Evolution  " + '$index',
