@@ -25,9 +25,9 @@ class LoginScreen extends StatelessWidget {
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
               mainTitle: "Login",
-              leadingImg: 'assets/icons/arrow-left.png',
+              leadingImg: false,
               logo: false,
-              searchIcon: true,
+              searchIcon: false,
             ),
           ),
           body: Container(

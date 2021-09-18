@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
               mainTitle: "Create account",
-              leadingImg: 'assets/icons/arrow-left.png',
+              leadingImg: false,
               logo: false,
               searchIcon: true,
             ),

@@ -3,7 +3,7 @@ import '../../styles.dart';
 
 class CustomAppbarWidget extends StatelessWidget {
   String mainTitle = "Riyasewana";
-  String leadingImg;
+  bool leadingImg;
   bool logo;
   bool searchIcon;
 
@@ -17,10 +17,12 @@ class CustomAppbarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      leading: Image.asset(leadingImg),
+      leading: leadingImg
+          ? Image.asset('assets/icons/profile-default.png')
+          : Image.asset('assets/icons/arrow-left.png'),
       title: logo
           ? Padding(
-              padding: EdgeInsets.only(left: 45),
+              padding: EdgeInsets.only(left: 35),
               child: Text("Riyasewana", style: LogoText))
           : Text(
               mainTitle,

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:riyasewana/screens/onboarding/splash_screen.dart';
 // import 'package:riyasewana/screens/onboarding/login_screen.dart';
 // import 'package:riyasewana/screens/onboarding/register_screen.dart';
-import 'package:riyasewana/screens/account/user-profile_screen.dart';
+// import 'package:riyasewana/screens/account/user-profile_screen.dart';
+import 'package:riyasewana/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,10 +26,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Roboto'),
-      home: UserProfile(),
+      home: HomeScreen(),
     );
   }
 }
+// UserProfile(),
 // RegisterScreen(),
 // LoginScreen(),
 // SplashScreen(),
