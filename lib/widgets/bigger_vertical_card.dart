@@ -18,7 +18,7 @@ class BigVerticalCard extends StatelessWidget {
       children: [
         Container(
           width: 170,
-          height: 210,
+          height: 220,
           margin: EdgeInsets.only(left: 15, right: 10, top: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -28,7 +28,7 @@ class BigVerticalCard extends StatelessWidget {
             children: [
               Container(
                 width: 170,
-                height: 120,
+                height: 130,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
@@ -44,25 +44,22 @@ class BigVerticalCard extends StatelessWidget {
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 130, left: 5, right: 2),
+                margin: EdgeInsets.only(top: 135, left: 5, right: 2),
                 child: Text(
                   adName,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
+                  style: TextStyle(color: Colors.black, fontSize: 14),
                 ),
               ),
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 155, left: 5, right: 2),
+                margin: EdgeInsets.only(top: 160, left: 5, right: 2),
                 child: Text(
                   adPrice,
                   maxLines: 2,
                   style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 14),
                 ),
               )

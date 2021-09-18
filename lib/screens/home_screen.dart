@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       Container(
-                          margin: EdgeInsets.only(left: 6),
+                          margin: EdgeInsets.only(left: 20),
                           child: Text(
                             "Vehicle Parts",
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -54,12 +54,12 @@ class HomeScreen extends StatelessWidget {
                             style: SeeAllStyle,
                           )),
                       Container(
-                        height: 130,
+                        height: double.infinity,
                         width: double.infinity,
-                        // padding: EdgeInsets.only(top: 40),
                         margin: EdgeInsets.only(top: 25),
                         child: GridView.count(
                           scrollDirection: Axis.horizontal,
+                          childAspectRatio: (140 / 104),
                           crossAxisCount: 1,
                           children: List.generate(9, (index) {
                             return VerticalCard(
@@ -76,11 +76,11 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: double.infinity,
-                  margin: EdgeInsets.only(top: 210),
+                  margin: EdgeInsets.only(top: 220),
                   child: Stack(
                     children: [
                       Container(
-                          margin: EdgeInsets.only(top: 7, left: 6),
+                          margin: EdgeInsets.only(top: 7, left: 20),
                           child: Text(
                             "Vehicles",
                             style: TextStyle(fontWeight: FontWeight.w900),
@@ -94,14 +94,15 @@ class HomeScreen extends StatelessWidget {
                       Container(
                           height: double.infinity,
                           width: double.infinity,
-                          margin: EdgeInsets.only(top: 30),
+                          margin: EdgeInsets.only(top: 20),
                           child: GridView.count(
                             crossAxisCount: 2,
+                            childAspectRatio: (170 / 220),
                             children: List.generate(8, (index) {
                               return Container(
                                 height: 250,
                                 width: 170,
-                                margin: EdgeInsets.all(4),
+                                margin: EdgeInsets.only(bottom: 10),
                                 child: BigVerticalCard(
                                   adImg: 'assets/images/avatar.jpg',
                                   adName: "Misubhshi Evolution  " + '$index',
