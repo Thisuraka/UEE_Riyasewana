@@ -21,6 +21,9 @@ const HeaderStyle = TextStyle(
     fontSize: 20.0,
     fontWeight: FontWeight.bold);
 
+const SubHeadStyle = TextStyle(
+    color: Color(0xFF858585), fontWeight: FontWeight.bold, fontSize: 13);
+
 const LabelStyle1 = TextStyle(
     fontFamily: DefaultFont,
     color: Color(0XFFABABAB),
@@ -36,8 +39,8 @@ const HintStyle1 = TextStyle(
 const SeeAllStyle = TextStyle(
     fontFamily: DefaultFont,
     color: Color(0xFF5F8DF3),
-    fontWeight: FontWeight.w400,
-    fontSize: 14.0);
+    fontWeight: FontWeight.w600,
+    fontSize: 16.0);
 
 const ProfileDataStyle = TextStyle(
     fontFamily: DefaultFont,
@@ -51,7 +54,22 @@ const TextButtonStyle = TextStyle(
   fontSize: 12.0,
 );
 
-//Sample text
+//Sample text and list
+List<String> LocationList = ["Kandy", "Colombo", "Galle", "Dompe"];
+List<String> VehcileTypeList = ["Car", "Van", "Bike", "Truck"];
+List<String> VehicleBrandList = ["Toyota", "Honda", "Nissan", "Subrau"];
+List<String> VehicleConditionList = ["Used", "Registered", "Unregistered"];
+List<String> VehicleTransmissionList = [
+  "Manual",
+  "Automatic",
+  "Auto-Manual",
+  "CVT"
+];
+List<String> VehicleFuelList = ["Petrol", "Diesel", "Electic", "Hydrogen"];
+List<String> PartTypeList = ["Car", "Van", "Bike", "Truck"];
+List<String> PartCatagoryList = ["Tyre", "Headlight", "Door", "Other"];
+List<String> PartConditionList = ["Used", "Second-hand"];
+
 String sampleHeading = "Lorem ipsum dolor sit amet";
 String samplePara =
     "Nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et";

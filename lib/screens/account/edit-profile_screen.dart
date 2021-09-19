@@ -8,7 +8,7 @@ import 'package:riyasewana/widgets/custom_textbox.dart';
 @override
 void initState() {}
 
-class RegisterScreen extends StatelessWidget {
+class EditProfileScreen extends StatelessWidget {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailAddress = TextEditingController();
   TextEditingController _fName = TextEditingController();
@@ -28,7 +28,7 @@ class RegisterScreen extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
-              mainTitle: "Create account",
+              mainTitle: "Edit account data",
               leadingImg: false,
               logo: false,
               searchIcon: true,
@@ -59,6 +59,7 @@ class RegisterScreen extends StatelessWidget {
                           controller: _emailAddress,
                           hint: "Email address",
                           labelText: 'Email address',
+                          readOnly: true,
                           prifixIcon: 'assets/icons/email.png',
                           keyboardType: TextInputType.emailAddress,
                           onTap: () {},
@@ -102,6 +103,7 @@ class RegisterScreen extends StatelessWidget {
                           hint: "Phone Number",
                           labelText: 'Phone Number',
                           prifixIcon: 'assets/icons/phone.png',
+                          readOnly: true,
                           keyboardType: TextInputType.phone,
                           onTap: () {},
                         ),

@@ -74,6 +74,7 @@ class LoginScreen extends StatelessWidget {
                           GestureDetector(
                             child: CustomButton(
                               text: "Login",
+                              width: 330.0,
                             ),
                             onTap: () {},
                           ),

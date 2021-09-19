@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   String text;
-  double? width = 330.0;
+  double width = 330.0;
 
-  CustomButton({required this.text, this.width});
+  CustomButton({required this.text, required this.width});
 
   @override
   Widget build(BuildContext context) {

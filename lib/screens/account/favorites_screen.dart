@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:riyasewana/styles.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';
-import 'package:riyasewana/widgets/custom_button.dart';
-import 'package:riyasewana/widgets/custom_button2.dart';
-import 'package:riyasewana/widgets/custom_textbox.dart';
-import 'package:riyasewana/widgets/vertical_card.dart';
 
 @override
 void initState() {}
@@ -26,7 +21,7 @@ class FavoritesScreen extends StatelessWidget {
               mainTitle: "Favorites",
               leadingImg: true,
               logo: false,
-              searchIcon: true,
+              searchIcon: false,
             ),
           ),
           bottomNavigationBar: BottomNavbar(),
@@ -48,45 +43,20 @@ class FavoritesScreen extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       Container(
-                          margin: EdgeInsets.only(left: 330),
-                          child: Text(
-                            "See All",
-                            style: SeeAllStyle,
-                          )),
-                      Container(
-                        height: 300,
+                        height: double.infinity,
                         width: double.infinity,
-                        // padding: EdgeInsets.only(top: 40),
                         margin: EdgeInsets.only(top: 25),
-                        child: ListView(
+                        child: GridView.count(
                           scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            BigVerticalCard(
+                          childAspectRatio: (140 / 104),
+                          crossAxisCount: 1,
+                          children: List.generate(9, (index) {
+                            return BigVerticalCard(
                               adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
+                              adName: "Misubhshi Evolution  " + '$index',
                               adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                          ],
+                            );
+                          }),
                         ),
                       )
                     ],
@@ -105,44 +75,20 @@ class FavoritesScreen extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.w900),
                           )),
                       Container(
-                          margin: EdgeInsets.only(top: 7, left: 330),
-                          child: Text(
-                            "See All",
-                            style: SeeAllStyle,
-                          )),
-                      Container(
                         height: double.infinity,
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 30),
-                        child: ListView(
+                        margin: EdgeInsets.only(top: 25),
+                        child: GridView.count(
                           scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            BigVerticalCard(
+                          childAspectRatio: (140 / 104),
+                          crossAxisCount: 1,
+                          children: List.generate(9, (index) {
+                            return BigVerticalCard(
                               adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
+                              adName: "Misubhshi Evolution  " + '$index',
                               adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                            BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution",
-                              adPrice: "Rs. 900000",
-                            ),
-                          ],
+                            );
+                          }),
                         ),
                       )
                     ],

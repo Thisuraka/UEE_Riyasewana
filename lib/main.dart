@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-// import 'package:riyasewana/screens/onboarding/splash_screen.dart';
-// import 'package:riyasewana/screens/onboarding/login_screen.dart';
-// import 'package:riyasewana/screens/onboarding/register_screen.dart';
-// import 'package:riyasewana/screens/account/user-profile_screen.dart';
+import 'package:riyasewana/screens/onboarding/splash_screen.dart';
+import 'package:riyasewana/screens/onboarding/login_screen.dart';
+import 'package:riyasewana/screens/onboarding/register_screen.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
+import 'package:riyasewana/screens/account/edit-profile_screen.dart';
 import 'package:riyasewana/screens/account/favorites_screen.dart';
 import 'package:riyasewana/screens/home_screen.dart';
+import 'package:riyasewana/screens/parts/add-part_screen.dart';
+import 'package:riyasewana/screens/vehicles/add-vehicle_screen.dart';
+import 'package:riyasewana/screens/vehicles/vehicle-list_screen.dart';
+import 'package:riyasewana/screens/parts/part-list_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,14 +32,17 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Roboto'),
-      home: FavoritesScreen(),
+      home: AddPartScreen(),
     );
   }
 }
-
+//  AddVehicleScreen(),
+//  PartListScreen(),
+// VehicleListScreen(),
 // FavoritesScreen(),
-//  HomeScreen(),
+// HomeScreen(),
 // UserProfile(),
+// EditProfileScreen(),
 // RegisterScreen(),
 // LoginScreen(),
 // SplashScreen(),
