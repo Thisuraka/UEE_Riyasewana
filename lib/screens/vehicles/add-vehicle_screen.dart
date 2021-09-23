@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
+import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/custom_dropdown.dart';
 import 'package:riyasewana/widgets/custom_textbox2.dart';
 import '../../styles.dart';
@@ -16,7 +17,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   String _vCondition = "";
   String _vTransmission = "";
   String _vFuel = "";
+  String _manftext = "Manufactury year";
   DateTime _Manf = DateTime.now();
+  bool _pNegotiate = false;
 
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
@@ -24,6 +27,10 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   TextEditingController _password = TextEditingController();
   TextEditingController _confPassword = TextEditingController();
   TextEditingController _phoneNumber = TextEditingController();
+  TextEditingController _price = TextEditingController();
+  TextEditingController _addInfo = TextEditingController();
+  TextEditingController _milage = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -101,6 +108,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           enabled: false,
                           onTap: () {},
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         CustomTextBox2(
                           controller: _phone,
                           hint: "Phone Number",
@@ -108,6 +118,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           readOnly: true,
                           enabled: true,
                           onTap: () {},
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         CustomDropDown(
                           hint: "Location",
@@ -120,7 +133,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           itemValue: _vLocation,
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 10,
                         ),
                         Container(
                           width: double.infinity,
@@ -128,6 +141,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                               EdgeInsets.only(left: 15, right: 15, bottom: 10),
                           child:
                               Text("Vehicle Information", style: SubHeadStyle),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         CustomDropDown(
                           hint: "Vehicle Type",
@@ -139,6 +155,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           },
                           itemValue: _vType,
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         CustomDropDown(
                           hint: "Brand",
                           itemList: VehicleBrandList,
@@ -148,6 +167,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                             });
                           },
                           itemValue: _vBrand,
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         CustomDropDown(
                           hint: "Condtion",
@@ -159,6 +181,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           },
                           itemValue: _vCondition,
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         CustomTextBox2(
                           controller: _phone,
                           hint: "Model",
@@ -167,10 +192,12 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           enabled: true,
                           onTap: () {},
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         GestureDetector(
                           child: Container(
-                            margin: EdgeInsets.only(
-                                left: 15, right: 15, bottom: 15),
+                            margin: EdgeInsets.only(left: 15, right: 15),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 25, vertical: 15),
                             height: 52.0,
@@ -198,9 +225,10 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                             DateTime.now().year - 100, 1),
                                         lastDate: DateTime(
                                             DateTime.now().year + 100, 1),
-                                        initialDate: DateTime.now(),
+                                        initialDate: _Manf,
                                         selectedDate: _Manf,
                                         onChanged: (DateTime dateTime) {
+                                          // _manftext = _Manf;
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -208,7 +236,100 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                   );
                                 })
                           },
-                        )
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 240,
+                              child: CustomTextBox2(
+                                controller: _price,
+                                hint: "Price",
+                                labelText: "Price",
+                                readOnly: false,
+                                enabled: true,
+                                onTap: () {},
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 60,
+                              child: Checkbox(
+                                value: _pNegotiate,
+                                checkColor: DefaultColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _pNegotiate = true;
+                                  });
+                                },
+                              ),
+                            ),
+                            Container(
+                              height: 60,
+                              width: 80,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Text("Negotoiate"),
+                            ),
+                            SizedBox(height: 100)
+                          ],
+                        ),
+                        CustomDropDown(
+                          hint: "Transmission type",
+                          itemList: VehicleTransmissionList,
+                          onSelectionChange: (String value) {
+                            setState(() {
+                              _vTransmission = value;
+                            });
+                          },
+                          itemValue: _vTransmission,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Fuel type",
+                          itemList: VehicleFuelList,
+                          onSelectionChange: (String value) {
+                            setState(() {
+                              _vFuel = value;
+                            });
+                          },
+                          itemValue: _vFuel,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _milage,
+                          hint: "Milage",
+                          labelText: "Milage",
+                          readOnly: true,
+                          enabled: true,
+                          onTap: () {},
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _addInfo,
+                          minLine: 5,
+                          maxLine: 10,
+                          hint: "Additional information",
+                          labelText: "Additional information",
+                          readOnly: false,
+                          enabled: true,
+                          onTap: () {},
+                        ),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                          child: CustomButton(
+                            text: "Add vehicle",
+                            width: 330.0,
+                          ),
+                          onTap: () {},
+                        ),
                       ],
                     ),
                   ),
