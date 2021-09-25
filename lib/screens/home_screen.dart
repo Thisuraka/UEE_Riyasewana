@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/screens/parts/part-list_screen.dart';
+import 'package:riyasewana/screens/parts/view-part_screen.dart';
+import 'package:riyasewana/screens/vehicles/vehicle-list_screen.dart';
+import 'package:riyasewana/screens/vehicles/view-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
@@ -47,12 +51,21 @@ class HomeScreen extends StatelessWidget {
                             "Vehicle Parts",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                      Container(
-                          margin: EdgeInsets.only(left: 330),
-                          child: Text(
-                            "See All",
-                            style: SeeAllStyle,
-                          )),
+                      GestureDetector(
+                        onTap: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => PartListScreen(),
+                            ),
+                          )
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 330),
+                            child: Text(
+                              "See All",
+                              style: SeeAllStyle,
+                            )),
+                      ),
                       Container(
                         height: double.infinity,
                         width: double.infinity,
@@ -62,10 +75,19 @@ class HomeScreen extends StatelessWidget {
                           childAspectRatio: (140 / 104),
                           crossAxisCount: 1,
                           children: List.generate(9, (index) {
-                            return VerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution  " + '$index',
-                              adPrice: "Rs. 900000",
+                            return GestureDetector(
+                              onTap: () => {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewPartScreen(),
+                                  ),
+                                ),
+                              },
+                              child: VerticalCard(
+                                adImg: 'assets/images/avatar.jpg',
+                                adName: "Misubhshi Evolution  " + '$index',
+                                adPrice: "Rs. 900000",
+                              ),
                             );
                           }),
                         ),
@@ -85,12 +107,21 @@ class HomeScreen extends StatelessWidget {
                             "Vehicles",
                             style: TextStyle(fontWeight: FontWeight.w900),
                           )),
-                      Container(
-                          margin: EdgeInsets.only(top: 7, left: 330),
-                          child: Text(
-                            "See All",
-                            style: SeeAllStyle,
-                          )),
+                      GestureDetector(
+                        onTap: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VehicleListScreen(),
+                            ),
+                          )
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 7, left: 330),
+                            child: Text(
+                              "See All",
+                              style: SeeAllStyle,
+                            )),
+                      ),
                       Container(
                           height: double.infinity,
                           width: double.infinity,
@@ -99,14 +130,23 @@ class HomeScreen extends StatelessWidget {
                             crossAxisCount: 2,
                             childAspectRatio: (170 / 220),
                             children: List.generate(8, (index) {
-                              return Container(
-                                height: 250,
-                                width: 170,
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: BigVerticalCard(
-                                  adImg: 'assets/images/avatar.jpg',
-                                  adName: "Misubhshi Evolution  " + '$index',
-                                  adPrice: "Rs. 900000",
+                              return GestureDetector(
+                                onTap: () => {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewVehicleScreen(),
+                                    ),
+                                  ),
+                                },
+                                child: Container(
+                                  height: 250,
+                                  width: 170,
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: BigVerticalCard(
+                                    adImg: 'assets/images/avatar.jpg',
+                                    adName: "Misubhshi Evolution  " + '$index',
+                                    adPrice: "Rs. 900000",
+                                  ),
                                 ),
                               );
                             }),

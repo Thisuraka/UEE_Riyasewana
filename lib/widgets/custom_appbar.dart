@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import '../../styles.dart';
 
 class CustomAppbarWidget extends StatelessWidget {
@@ -18,8 +19,18 @@ class CustomAppbarWidget extends StatelessWidget {
     return AppBar(
       backgroundColor: Colors.white,
       leading: leadingImg
-          ? Image.asset('assets/icons/profile-default.png')
-          : Image.asset('assets/icons/arrow-left.png'),
+          ? GestureDetector(
+              onTap: () => {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => UserProfile(),
+                      ),
+                    ),
+                  },
+              child: Image.asset('assets/icons/profile-default.png'))
+          : GestureDetector(
+              onTap: () => {Navigator.of(context).pop()},
+              child: Image.asset('assets/icons/arrow-left.png')),
       title: logo
           ? Padding(
               padding: EdgeInsets.only(left: 35),

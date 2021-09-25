@@ -33,151 +33,143 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(55),
-            child: CustomAppbarWidget(
-              mainTitle: "",
-              leadingImg: false,
-              logo: true,
-              searchIcon: false,
-            ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(55),
+        child: CustomAppbarWidget(
+          mainTitle: "",
+          leadingImg: false,
+          logo: true,
+          searchIcon: false,
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(bottom: 10, top: 5),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(width: 1.0, color: Colors.black),
           ),
-          bottomNavigationBar: Container(
-            padding: EdgeInsets.only(bottom: 10, top: 5),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(width: 1.0, color: Colors.black),
+        ),
+        child: Text(
+          "Posted on " + _postDate,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: DefaultColor, fontSize: 15),
+        ),
+      ),
+      body: GestureDetector(
+        onTap: () => {FocusScope.of(context).unfocus()},
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Stack(
+            children: [
+              CustomSlider(
+                imgList: _imgList,
               ),
-            ),
-            child: Text(
-              "Posted on " + _postDate,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: DefaultColor,
-                  fontSize: 15),
-            ),
-          ),
-          body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Stack(
-              children: [
-                CustomSlider(
-                  imgList: _imgList,
-                ),
-                Container(
-                  height: 80,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 255),
-                  child: Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(
-                          _vName,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 19.0,
-                              fontWeight: FontWeight.w700),
-                        ),
+              Container(
+                height: 80,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 255),
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        _vName,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19.0,
+                            fontWeight: FontWeight.w700),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 34),
-                        child: Text(
-                          "Rs. " + _vPrice,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500),
-                        ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 34),
+                      child: Text(
+                        "Rs. " + _vPrice,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 37, left: 100),
-                        child: _negotiable
-                            ? Text(
-                                " - " + "Negotiable ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w500),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 37, left: 100),
+                      child: _negotiable
+                          ? Text(
+                              " - " + "Negotiable ",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          : Text(
+                              " - " + "Non-negotiable ",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                    ),
+                    Container(
+                      height: 30,
+                      margin: EdgeInsets.only(top: 15, left: 335),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _bookmark = !_bookmark;
+                          });
+                        },
+                        child: _bookmark
+                            ? Image.asset(
+                                'assets/icons/bookmark.png',
+                                fit: BoxFit.contain,
                               )
-                            : Text(
-                                " - " + "Non-negotiable ",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                            : Image.asset('assets/icons/notBookmark.png',
+                                fit: BoxFit.contain),
                       ),
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.only(top: 15, left: 335),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _bookmark = !_bookmark;
-                            });
-                          },
-                          child: _bookmark
-                              ? Image.asset(
-                                  'assets/icons/bookmark.png',
-                                  fit: BoxFit.contain,
-                                )
-                              : Image.asset('assets/icons/notBookmark.png',
-                                  fit: BoxFit.contain),
-                        ),
-                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 330),
+                child: GestureDetector(
+                  onTap: () => {},
+                  child: ContactButton(call: true),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 330, left: 200),
+                child: GestureDetector(
+                  onTap: () => {},
+                  child: ContactButton(call: false),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 380),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomColTextbox(header: "Location", info: "Colombo 05"),
+                      CustomColTextbox(header: "Brand", info: "Nissan"),
+                      CustomColTextbox(header: "Model", info: "Silvia S15"),
+                      CustomColTextbox(header: "Transmission", info: "Manual"),
+                      CustomColTextbox(header: "Fuel type", info: "Petrol"),
+                      CustomColTextbox(
+                          header: "Manufacture year", info: "1992"),
+                      CustomColTextbox(header: "Milage (KM)", info: "155000"),
+                      CustomColTextbox(header: "Condition", info: "Used"),
+                      CustomColTextbox(
+                          header: "More details",
+                          info:
+                              "Silhouette body kit imported \nAir suspension \nAir condtion removed \nStaright pipe \nNever drifted "),
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 330),
-                  child: GestureDetector(
-                    onTap: () => {},
-                    child: ContactButton(call: true),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 330, left: 200),
-                  child: GestureDetector(
-                    onTap: () => {},
-                    child: ContactButton(call: false),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 380),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CustomColTextbox(
-                            header: "Location", info: "Colombo 05"),
-                        CustomColTextbox(header: "Brand", info: "Nissan"),
-                        CustomColTextbox(header: "Model", info: "Silvia S15"),
-                        CustomColTextbox(
-                            header: "Transmission", info: "Manual"),
-                        CustomColTextbox(header: "Fuel type", info: "Petrol"),
-                        CustomColTextbox(
-                            header: "Manufacture year", info: "1992"),
-                        CustomColTextbox(header: "Milage (KM)", info: "155000"),
-                        CustomColTextbox(header: "Condition", info: "Used"),
-                        CustomColTextbox(
-                            header: "More details",
-                            info:
-                                "Silhouette body kit imported \nAir suspension \nAir condtion removed \nStaright pipe \nNever drifted "),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

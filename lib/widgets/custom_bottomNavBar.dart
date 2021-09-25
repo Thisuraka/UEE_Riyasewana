@@ -1,3 +1,7 @@
+import 'package:riyasewana/screens/account/favorites_screen.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
+import 'package:riyasewana/screens/home_screen.dart';
+
 import '../../styles.dart';
 import 'package:flutter/material.dart';
 
@@ -20,19 +24,25 @@ class _BottomNavbarState extends State<BottomNavbar> {
     });
     switch (_currentIndex) {
       case 0:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => MainScreen(currentPageIndex: 0),
-        // ));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
         break;
       case 1:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => MainScreen(currentPageIndex: 1),
-        // ));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => FavoritesScreen(),
+          ),
+        );
         break;
       case 2:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => MainScreen(currentPageIndex: 2),
-        // ));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => UserProfile(),
+          ),
+        );
         break;
 
       default:

@@ -19,128 +19,124 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(55),
-            child: CustomAppbarWidget(
-              mainTitle: "Edit account data",
-              leadingImg: false,
-              logo: false,
-              searchIcon: true,
-            ),
-          ),
-          body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 20, top: 40),
-                    child: Text("Riyasewana",
-                        style: TextStyle(
-                            fontFamily: DefaultFont,
-                            color: DefaultColor,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 40.0)),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(55),
+        child: CustomAppbarWidget(
+          mainTitle: "Edit account data",
+          leadingImg: false,
+          logo: false,
+          searchIcon: true,
+        ),
+      ),
+      body: GestureDetector(
+        onTap: () => {FocusScope.of(context).unfocus()},
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20, top: 40),
+                  child: Text("Riyasewana",
+                      style: TextStyle(
+                          fontFamily: DefaultFont,
+                          color: DefaultColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 40.0)),
+                ),
+                Container(
+                  height: 550,
+                  // color: Colors.amber,
+                  margin: EdgeInsets.only(top: 100),
+                  child: Column(
+                    children: [
+                      CustomTextBox(
+                        controller: _emailAddress,
+                        hint: "Email address",
+                        labelText: 'Email address',
+                        readOnly: true,
+                        prifixIcon: 'assets/icons/email.png',
+                        keyboardType: TextInputType.emailAddress,
+                        onTap: () {},
+                      ),
+                      CustomTextBox(
+                        controller: _fName,
+                        hint: "First Name",
+                        labelText: 'First Name',
+                        prifixIcon: 'assets/icons/account.png',
+                        keyboardType: TextInputType.text,
+                        onTap: () {},
+                      ),
+                      CustomTextBox(
+                        controller: _lName,
+                        hint: "Last Name",
+                        labelText: 'Last Name',
+                        prifixIcon: 'assets/icons/account.png',
+                        keyboardType: TextInputType.text,
+                        onTap: () {},
+                      ),
+                      CustomTextBox(
+                        controller: _password,
+                        hint: "Password",
+                        labelText: 'Password',
+                        prifixIcon: 'assets/icons/lock.png',
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        onTap: () {},
+                      ),
+                      CustomTextBox(
+                        controller: _confPassword,
+                        hint: "Confrim Password",
+                        labelText: 'Confrim Password',
+                        prifixIcon: 'assets/icons/lock.png',
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
+                        onTap: () {},
+                      ),
+                      CustomTextBox(
+                        controller: _phoneNumber,
+                        hint: "Phone Number",
+                        labelText: 'Phone Number',
+                        prifixIcon: 'assets/icons/phone.png',
+                        readOnly: true,
+                        keyboardType: TextInputType.phone,
+                        onTap: () {},
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        child: CustomButton(
+                          text: "Register",
+                          width: 330.0,
+                        ),
+                        onTap: () {},
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          "Terms and Conditions",
+                          style: TextButtonStyle,
+                        ),
+                        onTap: () {},
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        child: CustomButton2(
+                          text: "Already have Account?  Login",
+                        ),
+                        onTap: () {},
+                      ),
+                    ],
                   ),
-                  Container(
-                    height: 550,
-                    // color: Colors.amber,
-                    margin: EdgeInsets.only(top: 100),
-                    child: Column(
-                      children: [
-                        CustomTextBox(
-                          controller: _emailAddress,
-                          hint: "Email address",
-                          labelText: 'Email address',
-                          readOnly: true,
-                          prifixIcon: 'assets/icons/email.png',
-                          keyboardType: TextInputType.emailAddress,
-                          onTap: () {},
-                        ),
-                        CustomTextBox(
-                          controller: _fName,
-                          hint: "First Name",
-                          labelText: 'First Name',
-                          prifixIcon: 'assets/icons/account.png',
-                          keyboardType: TextInputType.text,
-                          onTap: () {},
-                        ),
-                        CustomTextBox(
-                          controller: _lName,
-                          hint: "Last Name",
-                          labelText: 'Last Name',
-                          prifixIcon: 'assets/icons/account.png',
-                          keyboardType: TextInputType.text,
-                          onTap: () {},
-                        ),
-                        CustomTextBox(
-                          controller: _password,
-                          hint: "Password",
-                          labelText: 'Password',
-                          prifixIcon: 'assets/icons/lock.png',
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          onTap: () {},
-                        ),
-                        CustomTextBox(
-                          controller: _confPassword,
-                          hint: "Confrim Password",
-                          labelText: 'Confrim Password',
-                          prifixIcon: 'assets/icons/lock.png',
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
-                          onTap: () {},
-                        ),
-                        CustomTextBox(
-                          controller: _phoneNumber,
-                          hint: "Phone Number",
-                          labelText: 'Phone Number',
-                          prifixIcon: 'assets/icons/phone.png',
-                          readOnly: true,
-                          keyboardType: TextInputType.phone,
-                          onTap: () {},
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        GestureDetector(
-                          child: CustomButton(
-                            text: "Register",
-                            width: 330.0,
-                          ),
-                          onTap: () {},
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        GestureDetector(
-                          child: Text(
-                            "Terms and Conditions",
-                            style: TextButtonStyle,
-                          ),
-                          onTap: () {},
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        GestureDetector(
-                          child: CustomButton2(
-                            text: "Already have Account?  Login",
-                          ),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
