@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
@@ -113,7 +114,10 @@ class RegisterScreen extends StatelessWidget {
                             text: "Register",
                             width: 330.0,
                           ),
-                          onTap: () {},
+                          // onTap: () async {
+                          //   final response = await ApiCalls.test();
+                          //   print(response.jsonBody['']);
+                          // },
                         ),
                         SizedBox(
                           height: 15,

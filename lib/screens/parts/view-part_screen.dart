@@ -6,26 +6,24 @@ import 'package:riyasewana/widgets/custom_textboxCol.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../styles.dart';
 
-class ViewVehicleScreen extends StatefulWidget {
+class ViewPartScreen extends StatefulWidget {
   @override
-  _ViewVehicleScreenState createState() => _ViewVehicleScreenState();
+  _ViewPartScreenState createState() => _ViewPartScreenState();
 }
 
 String _postDate = "2021-04-21";
-String _vName = "Nissan Silvia S15 - 1992";
-String _vPrice = "9,400,000";
-bool _negotiable = false;
-bool _bookmark = false;
+String _pName = "Honda CM125 Tanks";
+String _pPrice = "10,000";
+bool _negotiable = true;
+bool _bookmark = true;
 
 List<String> _imgList = [
-  'assets/images/car1.jpg',
-  'assets/images/car2.jpg',
-  'assets/images/car3.jpg',
-  'assets/images/car4.jpg',
-  'assets/images/car5.jpg'
+  'assets/images/part1.jfif',
+  'assets/images/part2.jfif',
+  'assets/images/part3.jfif',
 ];
 
-class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
+class _ViewPartScreenState extends State<ViewPartScreen> {
   @override
   void initState() {
     super.initState();
@@ -82,7 +80,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text(
-                          _vName,
+                          _pName,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 19.0,
@@ -92,7 +90,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 34),
                         child: Text(
-                          "Rs. " + _vPrice,
+                          "Rs. " + _pPrice,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15.0,
@@ -159,19 +157,11 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                       children: [
                         CustomColTextbox(
                             header: "Location", info: "Colombo 05"),
-                        CustomColTextbox(header: "Brand", info: "Nissan"),
-                        CustomColTextbox(header: "Model", info: "Silvia S15"),
-                        CustomColTextbox(
-                            header: "Transmission", info: "Manual"),
-                        CustomColTextbox(header: "Fuel type", info: "Petrol"),
-                        CustomColTextbox(
-                            header: "Manufacture year", info: "1992"),
-                        CustomColTextbox(header: "Milage (KM)", info: "155000"),
                         CustomColTextbox(header: "Condition", info: "Used"),
                         CustomColTextbox(
                             header: "More details",
                             info:
-                                "Silhouette body kit imported \nAir suspension \nAir condtion removed \nStaright pipe \nNever drifted "),
+                                "CM125 tanks \nFirst one has a bit of rust \nNo brokers \nOriginal Japan"),
                       ],
                     ),
                   ),
