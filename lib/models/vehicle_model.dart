@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:image_picker/image_picker.dart';
+
 VehicleInfo vehicleInfoFromJson(String str) =>
     VehicleInfo.fromJson(json.decode(str));
 
 String vehicleInfoToJson(VehicleInfo data) => json.encode(data.toJson());
 
 class VehicleInfo {
-  List<AdImage> images;
+  List<XFile>? images;
   String vType;
   String vBrand;
   String vCondition;

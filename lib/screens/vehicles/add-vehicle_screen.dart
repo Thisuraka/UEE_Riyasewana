@@ -23,8 +23,6 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   DateTime _Manf = DateTime.now();
   bool _pNegotiate = false;
 
-  List<XFile>? _imageFileList = [];
-
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _lName = TextEditingController();
@@ -66,9 +64,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                 margin: EdgeInsets.only(top: 30),
                 width: double.infinity,
                 height: 100,
-                child: CustomImagePicker(
-                  imageFileList: [],
-                ),
+                child: CustomImagePicker(),
               ),
               Container(
                 margin: EdgeInsets.only(top: 140),

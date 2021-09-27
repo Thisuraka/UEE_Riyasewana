@@ -4,12 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import '../../styles.dart';
 
 class CustomImagePicker extends StatefulWidget {
-  List<XFile>? imageFileList = [];
+  // List<XFile>? imageFileList = [];
 
-  CustomImagePicker({
-    Key? key,
-    required this.imageFileList,
-  }) : super(key: key);
+  // CustomImagePicker({Key? key, required this.imageFileList}) : super(key: key);
 
   @override
   _CustomImagePickerState createState() => _CustomImagePickerState();
@@ -80,9 +77,11 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
     final List<XFile>? _selectedImages = await _picker.pickMultiImage();
     if (_selectedImages!.isNotEmpty) {
       _imageFileList!.addAll(_selectedImages);
+      // widget.imageFileList!.addAll(_selectedImages);
       if (_imageFileList!.length > 9) {
         int l = _imageFileList!.length;
         _imageFileList!.removeRange(9, l);
+        // widget.imageFileList!.removeRange(9, l);
         print("Sorry can't have more than 9");
       }
     }

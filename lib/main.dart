@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Roboto'),
-      home: AddVehicleScreen(),
+      home: HomeScreen(),
     );
   }
 }
