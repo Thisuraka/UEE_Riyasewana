@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/custom_dropdown.dart';
+import 'package:riyasewana/widgets/custom_imagePicker.dart';
 import 'package:riyasewana/widgets/custom_textbox2.dart';
 import '../../styles.dart';
 
@@ -20,6 +22,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   String _manftext = "Manufactury year";
   DateTime _Manf = DateTime.now();
   bool _pNegotiate = false;
+
+  List<XFile>? _imageFileList = [];
 
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
@@ -59,30 +63,11 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                 ),
               ),
               Container(
+                margin: EdgeInsets.only(top: 30),
                 width: double.infinity,
                 height: 100,
-                margin:
-                    EdgeInsets.only(right: 20, left: 20, top: 30, bottom: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: Button2BorderColor, width: 1.5),
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 150, top: 10),
-                      child: Image.asset(
-                        'assets/icons/addImage.png',
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 135, top: 60),
-                      child: Text("Add images"),
-                    )
-                  ],
+                child: CustomImagePicker(
+                  imageFileList: [],
                 ),
               ),
               Container(
