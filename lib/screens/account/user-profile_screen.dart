@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/screens/account/edit-profile_screen.dart';
 import 'package:riyasewana/screens/parts/add-part_screen.dart';
 import 'package:riyasewana/screens/vehicles/add-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
@@ -42,13 +43,22 @@ class UserProfile extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                width: 25,
-                height: 25,
-                margin: EdgeInsets.only(top: 60, left: 340),
-                child: Image.asset(
-                  'assets/icons/edit.png',
-                  fit: BoxFit.fill,
+              GestureDetector(
+                onTap: () => {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(),
+                    ),
+                  )
+                },
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  margin: EdgeInsets.only(top: 60, left: 340),
+                  child: Image.asset(
+                    'assets/icons/edit.png',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Container(
@@ -146,13 +156,16 @@ class UserProfile extends StatelessWidget {
                   child: Column(
                     children: [
                       HorizontalCard(
-                          adImg: 'assets/images/avatar.jpg',
-                          adName: "Misubhshi Evolution VI",
-                          adPrice: "Rs. 900000"),
+                        adImg: 'assets/images/part1.jfif',
+                        adName: "Honda CM125 Tank",
+                        adPrice: "Rs. 10000",
+                        adType: 'Part',
+                      ),
                       HorizontalCard(
                           adImg: 'assets/images/avatar.jpg',
                           adName: "Misubhshi Evolution VI",
-                          adPrice: "Rs. 900000"),
+                          adPrice: "Rs. 900000",
+                          adType: 'Vehicle'),
                     ],
                   ),
                 ),

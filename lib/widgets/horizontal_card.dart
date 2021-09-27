@@ -1,3 +1,6 @@
+import 'package:riyasewana/screens/parts/edit-part_screen.dart';
+import 'package:riyasewana/screens/vehicles/edit-vehicle_screen.dart';
+
 import '../../styles.dart';
 import 'package:flutter/material.dart';
 
@@ -5,9 +8,13 @@ class HorizontalCard extends StatelessWidget {
   String adImg;
   String adName;
   String adPrice;
+  String adType;
 
   HorizontalCard(
-      {required this.adImg, required this.adName, required this.adPrice});
+      {required this.adImg,
+      required this.adName,
+      required this.adPrice,
+      required this.adType});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +39,26 @@ class HorizontalCard extends StatelessWidget {
             ),
           ),
           GestureDetector(
+            onTap: () => {
+              if (adType == "Part")
+                {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditPartScreen(),
+                    ),
+                  ),
+                }
+              else if (adType == "Vehicle")
+                {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditVehicleScreen(),
+                    ),
+                  ),
+                }
+              else
+                {null}
+            },
             child: Container(
               margin: EdgeInsets.only(left: 320, top: 5),
               width: 30,
@@ -41,7 +68,6 @@ class HorizontalCard extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
             ),
-            onTap: () {},
           ),
           Container(
             width: 190,

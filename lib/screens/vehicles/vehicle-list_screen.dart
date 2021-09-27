@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/screens/vehicles/view-vehicle_screen.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';
@@ -88,14 +89,23 @@ class _VehicleListScreen extends State<VehicleListScreen> {
                       crossAxisCount: 2,
                       childAspectRatio: (170 / 220),
                       children: List.generate(8, (index) {
-                        return Container(
-                          height: 250,
-                          width: 170,
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: BigVerticalCard(
-                            adImg: 'assets/images/avatar.jpg',
-                            adName: "Misubhshi Evolution  " + '$index',
-                            adPrice: "Rs. 900000",
+                        return GestureDetector(
+                          onTap: () => {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ViewVehicleScreen(),
+                              ),
+                            ),
+                          },
+                          child: Container(
+                            height: 250,
+                            width: 170,
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: BigVerticalCard(
+                              adImg: 'assets/images/avatar.jpg',
+                              adName: "Misubhshi Evolution  " + '$index',
+                              adPrice: "Rs. 900000",
+                            ),
                           ),
                         );
                       }),

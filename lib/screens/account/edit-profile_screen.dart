@@ -109,29 +109,13 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         child: CustomButton(
-                          text: "Register",
+                          text: "Confirm",
                           width: 330.0,
                         ),
                         onTap: () {},
                       ),
                       SizedBox(
                         height: 15,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Terms and Conditions",
-                          style: TextButtonStyle,
-                        ),
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      GestureDetector(
-                        child: CustomButton2(
-                          text: "Already have Account?  Login",
-                        ),
-                        onTap: () {},
                       ),
                     ],
                   ),
