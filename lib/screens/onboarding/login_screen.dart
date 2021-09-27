@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
           ),
           body: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             child: Center(
               child: SingleChildScrollView(
                 child: Stack(

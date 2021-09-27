@@ -27,7 +27,7 @@ class FavoritesScreen extends StatelessWidget {
           bottomNavigationBar: BottomNavbar(),
           body: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: 30),
             child: Stack(
               children: [

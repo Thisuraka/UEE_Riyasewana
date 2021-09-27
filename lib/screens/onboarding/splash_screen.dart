@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
           child: Container(
             color: DefaultColor,
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             child: Stack(
               children: <Widget>[
                 Pulse(

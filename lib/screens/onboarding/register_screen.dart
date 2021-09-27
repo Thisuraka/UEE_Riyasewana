@@ -37,7 +37,7 @@ class RegisterScreen extends StatelessWidget {
           ),
           body: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Stack(
                 children: [

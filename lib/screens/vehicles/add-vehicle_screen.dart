@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:riyasewana/utils/helper.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/custom_dropdown.dart';
@@ -23,6 +24,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   DateTime _Manf = DateTime.now();
   bool _pNegotiate = false;
 
+  List<XFile>? _imageFileList = [];
+  bool _gen = false;
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _lName = TextEditingController();
@@ -32,6 +35,25 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
   TextEditingController _milage = TextEditingController();
+
+  Future<void> addImage() async {
+    _imageFileList = await Helper.selectImages();
+    setGen();
+  }
+
+  void removeImage(int index) {
+    _imageFileList!.removeAt(index);
+    setGen();
+  }
+
+  void setGen() {
+    if (_imageFileList!.length > 0) {
+      _gen = true;
+    } else {
+      _gen = false;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,22 +71,27 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         onTap: () => {FocusScope.of(context).unfocus()},
         child: Container(
           height: double.infinity,
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 10),
           child: Stack(
             children: [
               Container(
                 margin: EdgeInsets.only(top: 10, left: 20),
                 child: Text(
-                  "Photos 0/10",
+                  "Photos " + _imageFileList!.length.toString() + "/9",
                   style: TextStyle(fontSize: 12),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 30),
-                width: double.infinity,
-                height: 100,
-                child: CustomImagePicker(),
+              GestureDetector(
+                onTap: addImage,
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  width: double.infinity,
+                  height: 100,
+                  child: CustomImagePicker(
+                      _imageFileList, addImage, removeImage,
+                      gen: _gen),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 140),

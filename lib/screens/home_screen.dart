@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riyasewana/screens/parts/part-list_screen.dart';
 import 'package:riyasewana/screens/parts/view-part_screen.dart';
+import 'package:riyasewana/widgets/NavDrawer.dart';
 import 'package:riyasewana/screens/vehicles/vehicle-list_screen.dart';
 import 'package:riyasewana/screens/vehicles/view-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
@@ -34,9 +35,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomNavbar(),
+          drawer: NavDrawer(),
           body: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             child: Stack(
               children: [
                 Container(

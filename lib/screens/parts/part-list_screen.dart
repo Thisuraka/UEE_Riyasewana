@@ -35,7 +35,7 @@ class _PartListScreen extends State<PartListScreen> {
           bottomNavigationBar: BottomNavbar(),
           body: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: 10),
             child: Stack(
               children: [

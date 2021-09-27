@@ -61,7 +61,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
         onTap: () => {FocusScope.of(context).unfocus()},
         child: Container(
           height: double.infinity,
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.symmetric(horizontal: 10),
           child: Stack(
             children: [

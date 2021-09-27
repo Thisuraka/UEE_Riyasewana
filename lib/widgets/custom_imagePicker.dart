@@ -4,9 +4,14 @@ import 'package:image_picker/image_picker.dart';
 import '../../styles.dart';
 
 class CustomImagePicker extends StatefulWidget {
-  // List<XFile>? imageFileList = [];
+  final bool gen;
+  final List<XFile>? _imageFileList;
+  final Function onTap;
+  final Function onChange;
 
-  // CustomImagePicker({Key? key, required this.imageFileList}) : super(key: key);
+  const CustomImagePicker(this._imageFileList, this.onTap, this.onChange,
+      {Key? key, this.gen = false})
+      : super(key: key);
 
   @override
   _CustomImagePickerState createState() => _CustomImagePickerState();
@@ -14,11 +19,7 @@ class CustomImagePicker extends StatefulWidget {
 
 class _CustomImagePickerState extends State<CustomImagePicker> {
   final ImagePicker _picker = ImagePicker();
-  List<XFile>? _imageFileList = [];
   final List<XFile>? _selectedImages = [];
-  double _size = double.infinity;
-  double _radius = 50;
-  bool _gen = false;
 
   @override
   void initState() {
@@ -32,16 +33,15 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       children: [
         GestureDetector(
           onTap: () {
-            selectImages();
-            updateSizeSmall();
+            widget.onTap();
           },
           child: Container(
-            width: _size,
+            width: widget.gen ? 95 : double.infinity,
             height: 92,
             margin: EdgeInsets.only(right: 20, left: 20),
             padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(_radius),
+              borderRadius: BorderRadius.circular(widget.gen ? 15 : 50),
               border: Border.all(color: Button2BorderColor, width: 1.5),
             ),
             child: Column(
@@ -61,33 +61,9 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
             ),
           ),
         ),
-        _gen ? genList() : Container()
+        widget.gen ? genList() : Container()
       ],
     ));
-  }
-
-  void updateSizeSmall() {
-    setState(() {
-      _size = 95;
-      _radius = 15;
-    });
-  }
-
-  void selectImages() async {
-    final List<XFile>? _selectedImages = await _picker.pickMultiImage();
-    if (_selectedImages!.isNotEmpty) {
-      _imageFileList!.addAll(_selectedImages);
-      // widget.imageFileList!.addAll(_selectedImages);
-      if (_imageFileList!.length > 9) {
-        int l = _imageFileList!.length;
-        _imageFileList!.removeRange(9, l);
-        // widget.imageFileList!.removeRange(9, l);
-        print("Sorry can't have more than 9");
-      }
-    }
-    print("Image list length : " + _imageFileList!.length.toString());
-    _gen = true;
-    setState(() {});
   }
 
   genList() {
@@ -99,7 +75,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
         scrollDirection: Axis.horizontal,
         childAspectRatio: (100 / 100),
         crossAxisCount: 1,
-        children: List.generate(_imageFileList!.length, (index) {
+        children: List.generate(widget._imageFileList!.length, (index) {
           return Stack(
             children: [
               Container(
@@ -111,18 +87,14 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                     border: Border.all(color: Button2BorderColor)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.file(File(_imageFileList![index].path),
+                  child: Image.file(File(widget._imageFileList![index].path),
                       fit: BoxFit.cover),
                 ),
               ),
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    print(index);
-                    _imageFileList!.removeAt(index);
-                    if (_imageFileList!.length < 1) {
-                      selectImages();
-                    }
+                    widget.onChange(index);
                   });
                 },
                 child: Container(

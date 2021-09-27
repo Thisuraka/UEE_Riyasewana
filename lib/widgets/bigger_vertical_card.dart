@@ -37,8 +37,8 @@ class BigVerticalCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(2),
-                      topRight: Radius.circular(2)),
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
                 ),
               ),
               Container(

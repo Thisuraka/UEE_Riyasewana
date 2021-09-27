@@ -27,7 +27,7 @@ class UserProfile extends StatelessWidget {
         onTap: () => {FocusScope.of(context).unfocus()},
         child: Container(
           height: double.infinity,
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
               Blur(
