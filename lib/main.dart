@@ -3,7 +3,6 @@ import 'package:riyasewana/screens/onboarding/login_screen.dart';
 import 'package:riyasewana/screens/parts/edit-part_screen.dart';
 import 'package:riyasewana/screens/testscreens/testScreen2.dart';
 import 'package:riyasewana/screens/parts/view-part_screen.dart';
-import 'package:riyasewana/screens/testScreens/testScreen.dart';
 import 'package:riyasewana/screens/onboarding/splash_screen.dart';
 import 'package:riyasewana/screens/onboarding/register_screen.dart';
 import 'package:riyasewana/screens/account/user-profile_screen.dart';
@@ -38,7 +37,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Roboto'),
-      home: TestScreen(),
+      home: AddVehicleScreen(),
     );
   }
 }
@@ -57,6 +56,4 @@ class _HomeState extends State<Home> {
 // LoginScreen(),
 // SplashScreen(),
 
-
-// TestScreen(),
 // TestScreen2(),
