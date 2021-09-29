@@ -56,18 +56,34 @@ const TextButtonStyle = TextStyle(
 
 //Sample text and list
 List<String> LocationList = ["Kandy", "Colombo", "Galle", "Dompe"];
-List<String> VehcileTypeList = ["Car", "Van", "Bike", "Truck"];
-List<String> VehicleBrandList = ["Toyota", "Honda", "Nissan", "Subrau"];
-List<String> VehicleConditionList = ["Used", "Registered", "Unregistered"];
-List<String> VehicleTransmissionList = [
-  "Manual",
-  "Automatic",
-  "Auto-Manual",
-  "CVT"
+List<String> VehcileTypeList = [
+  "Bus",
+  "Car",
+  "Crew-cab",
+  "Heavy-duty",
+  "Lorry",
+  "Mo-Cycle",
+  "Pickup",
+  "SUV",
+  "Tuk",
+  "Tractor"
 ];
+List<String> VehicleBrandList = ["Toyota", "Honda", "Nissan", "Subrau"];
+List<String> VehicleConditionList = [
+  "Any",
+  "Used",
+  "Registered",
+  "Unregistered"
+];
+List<String> VehicleTransmissionList = ["Any", "Manual", "Automatic", "CVT"];
 List<String> VehicleFuelList = ["Petrol", "Diesel", "Electic", "Hydrogen"];
 List<String> PartTypeList = ["Car", "Van", "Bike", "Truck"];
-List<String> PartCatagoryList = ["Tyre", "Headlight", "Door", "Other"];
+List<String> PartCatagoryList = [
+  "Electrical",
+  "Component",
+  "Accessorie",
+  "Other"
+];
 List<String> PartConditionList = ["Used", "Second-hand"];
 
 String sampleHeading = "Lorem ipsum dolor sit amet";

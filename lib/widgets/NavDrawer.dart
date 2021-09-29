@@ -1,10 +1,22 @@
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:riyasewana/screens/account/favorites_screen.dart';
 import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/screens/home_screen.dart';
 import 'package:riyasewana/styles.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawer extends StatefulWidget {
+  String profileImg = '';
+
+  NavDrawer({required this.profileImg});
+
+  @override
+  _NavDrawerScreen createState() => _NavDrawerScreen();
+}
+
+class _NavDrawerScreen extends State<NavDrawer> {
+  String _defaultImg = 'assets/images/nav.jpg';
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -13,17 +25,45 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: [
-              Image.asset(
-                'assets/images/nav.jpg',
-                fit: BoxFit.cover,
+              Blur(
+                blur: 3.5,
+                blurColor: Colors.black,
+                child: Container(
+                  color: Colors.white,
+                  height: 220,
+                  width: 310,
+                  child: Image.asset(
+                    widget.profileImg,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               Container(
-                color: Colors.grey,
+                height: 80,
+                width: 80,
+                margin: EdgeInsets.only(top: 120, left: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  color: Colors.white,
+                ),
+                child: ClipRRect(
+                  child: Image.asset(
+                    widget.profileImg,
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+              ),
+              Container(
+                color: DefaultColor,
                 width: double.infinity,
-                height: 2,
-                margin: EdgeInsets.only(top: 290),
+                height: 4,
+                margin: EdgeInsets.only(top: 220),
               )
             ],
+          ),
+          SizedBox(
+            height: 20,
           ),
           ListTile(
             leading: Image.asset(
@@ -63,6 +103,15 @@ class NavDrawer extends StatelessWidget {
                 ),
               )
             },
+          ),
+          GestureDetector(
+            child: Container(
+              margin: EdgeInsets.only(left: 120, top: 320),
+              child: Text(
+                "Donate",
+                style: SeeAllStyle,
+              ),
+            ),
           )
         ],
       ),

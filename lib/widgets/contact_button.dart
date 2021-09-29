@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../styles.dart';
+
 class ContactButton extends StatefulWidget {
   bool call = true;
   ContactButton({Key? key, required this.call}) : super(key: key);
@@ -22,6 +24,7 @@ class _ContactButtonState extends State<ContactButton> {
         width: 175,
         height: 35.0,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
           gradient: LinearGradient(
             colors: <Color>[
               Color(0xFF12A1FF),

@@ -8,15 +8,20 @@ import 'package:riyasewana/styles.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';
-import 'package:riyasewana/widgets/custom_button.dart';
-import 'package:riyasewana/widgets/custom_button2.dart';
-import 'package:riyasewana/widgets/custom_textbox.dart';
 import 'package:riyasewana/widgets/vertical_card.dart';
 
 @override
 void initState() {}
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => new _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  String _profileImg = 'assets/images/avatar.jpg';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +30,7 @@ class HomeScreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          key: _drawerKey,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
@@ -32,10 +38,13 @@ class HomeScreen extends StatelessWidget {
               leadingImg: true,
               logo: false,
               searchIcon: true,
+              drawerKey: _drawerKey,
             ),
           ),
           bottomNavigationBar: BottomNavbar(),
-          drawer: NavDrawer(),
+          drawer: NavDrawer(
+            profileImg: _profileImg,
+          ),
           body: Container(
             height: double.infinity,
             width: MediaQuery.of(context).size.width,

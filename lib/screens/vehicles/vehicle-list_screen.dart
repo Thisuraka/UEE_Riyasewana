@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:riyasewana/screens/vehicles/view-vehicle_screen.dart';
+import 'package:riyasewana/widgets/NavDrawer.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';
+import 'package:riyasewana/widgets/vehicle_filter.dart';
 import '../../styles.dart';
 
 class VehicleListScreen extends StatefulWidget {
@@ -10,19 +12,20 @@ class VehicleListScreen extends StatefulWidget {
   _VehicleListScreen createState() => _VehicleListScreen();
 }
 
-@override
-void initState() {}
-
 class _VehicleListScreen extends State<VehicleListScreen> {
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  String dropdownValue = 'Newest First';
+  String _profileImg = 'assets/images/avatar.jpg';
+
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = 'Newest First';
     return MaterialApp(
       home: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          key: _drawerKey,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
@@ -30,9 +33,14 @@ class _VehicleListScreen extends State<VehicleListScreen> {
               leadingImg: true,
               logo: false,
               searchIcon: true,
+              drawerKey: _drawerKey,
             ),
           ),
           bottomNavigationBar: BottomNavbar(),
+          drawer: NavDrawer(
+            profileImg: _profileImg,
+          ),
+          endDrawer: VehicleFilter(),
           body: Container(
             height: double.infinity,
             width: MediaQuery.of(context).size.width,
@@ -71,13 +79,18 @@ class _VehicleListScreen extends State<VehicleListScreen> {
                           }).toList(),
                         ),
                       ),
-                      Container(
-                          height: 40,
-                          margin: EdgeInsets.only(top: 10, left: 330),
-                          child: Text(
-                            "Filter",
-                            style: SeeAllStyle,
-                          )),
+                      GestureDetector(
+                        onTap: () {
+                          _drawerKey.currentState?.openEndDrawer();
+                        },
+                        child: Container(
+                            height: 40,
+                            margin: EdgeInsets.only(top: 10, left: 330),
+                            child: Text(
+                              "Filter",
+                              style: SeeAllStyle,
+                            )),
+                      ),
                     ],
                   ),
                 ),
