@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riyasewana/utils/helper.dart';
@@ -55,6 +57,13 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
     setState(() {});
   }
 
+  void createAd() {
+    for (int i = 0; i < _imageFileList!.length; i++) {
+      String lala = _imageFileList![i].path;
+      print(lala);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +75,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
           logo: false,
           searchIcon: false,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createAd,
       ),
       body: GestureDetector(
         onTap: () => {FocusScope.of(context).unfocus()},

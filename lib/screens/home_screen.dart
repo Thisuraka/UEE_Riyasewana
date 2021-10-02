@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riyasewana/screens/parts/part-list_screen.dart';
 import 'package:riyasewana/screens/parts/view-part_screen.dart';
-import 'package:riyasewana/widgets/NavDrawer.dart';
+import 'package:riyasewana/widgets/navDrawer.dart';
 import 'package:riyasewana/screens/vehicles/vehicle-list_screen.dart';
 import 'package:riyasewana/screens/vehicles/view-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   width: double.infinity,
                   height: double.infinity,
-                  margin: EdgeInsets.only(top: 220),
+                  margin: EdgeInsets.only(top: 230),
                   child: Stack(
                     children: [
                       Container(

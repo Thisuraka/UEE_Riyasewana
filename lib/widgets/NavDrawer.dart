@@ -82,7 +82,7 @@ class _NavDrawerScreen extends State<NavDrawer> {
             leading: Image.asset(
               'assets/icons/fav-grey.png',
             ),
-            title: Text('My account'),
+            title: Text('My favourites'),
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -95,7 +95,7 @@ class _NavDrawerScreen extends State<NavDrawer> {
             leading: Image.asset(
               'assets/icons/profile-grey.png',
             ),
-            title: Text('My Favourites'),
+            title: Text('My account'),
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(

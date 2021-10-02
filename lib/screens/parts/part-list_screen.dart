@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riyasewana/screens/parts/view-part_screen.dart';
-import 'package:riyasewana/widgets/NavDrawer.dart';
+import 'package:riyasewana/widgets/navDrawer.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';

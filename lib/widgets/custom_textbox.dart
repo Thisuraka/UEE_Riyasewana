@@ -11,23 +11,24 @@ class CustomTextBox extends StatelessWidget {
   String hint;
   TextStyle hintStyle;
   String labelText;
-  Function onTap;
   String prifixIcon;
   bool obscureText;
+  String? Function(dynamic)? validator;
 
-  CustomTextBox(
-      {required this.controller,
-      required this.hint,
-      this.textCapitalization = TextCapitalization.none,
-      this.keyboardType = TextInputType.text,
-      this.readOnly = false,
-      this.minLine = 1,
-      this.maxLine = 1,
-      this.hintStyle = HintStyle1,
-      required this.labelText,
-      required this.prifixIcon,
-      this.obscureText = false,
-      required this.onTap});
+  CustomTextBox({
+    required this.controller,
+    required this.hint,
+    this.validator,
+    this.textCapitalization = TextCapitalization.none,
+    this.keyboardType = TextInputType.text,
+    this.readOnly = false,
+    this.minLine = 1,
+    this.maxLine = 1,
+    this.hintStyle = HintStyle1,
+    required this.labelText,
+    required this.prifixIcon,
+    this.obscureText = false,
+  });
 
   static InputBorder enabledBorder = OutlineInputBorder(
     borderSide: BorderSide(
@@ -51,12 +52,10 @@ class CustomTextBox extends StatelessWidget {
           keyboardType: keyboardType,
           autofocus: false,
           textCapitalization: textCapitalization,
+          validator: validator,
           controller: controller,
           obscureText: obscureText,
           readOnly: readOnly,
-          onTap: () {
-            onTap;
-          },
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.grey[50],

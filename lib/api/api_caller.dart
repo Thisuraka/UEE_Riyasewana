@@ -7,7 +7,8 @@ import 'package:http/http.dart';
 import 'api_response.dart';
 import 'api_status.dart';
 
-const baseUrl = "http://localhost:4001";
+// const baseUrl = "http://localhost:4001";
+const baseUrl = "http://10.0.2.2:4001";
 const timeout = 80;
 
 class ApiCaller {
@@ -23,7 +24,7 @@ class ApiCaller {
           allHeaders.addAll(headers);
         }
         print("Url: " + baseUrl + endpoint);
-        print(data);
+        // print(data);
 
         final response = await http
             .post(

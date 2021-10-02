@@ -59,7 +59,6 @@ class EditProfileScreen extends StatelessWidget {
                         readOnly: true,
                         prifixIcon: 'assets/icons/email.png',
                         keyboardType: TextInputType.emailAddress,
-                        onTap: () {},
                       ),
                       CustomTextBox(
                         controller: _fName,
@@ -67,7 +66,6 @@ class EditProfileScreen extends StatelessWidget {
                         labelText: 'First Name',
                         prifixIcon: 'assets/icons/account.png',
                         keyboardType: TextInputType.text,
-                        onTap: () {},
                       ),
                       CustomTextBox(
                         controller: _lName,
@@ -75,7 +73,6 @@ class EditProfileScreen extends StatelessWidget {
                         labelText: 'Last Name',
                         prifixIcon: 'assets/icons/account.png',
                         keyboardType: TextInputType.text,
-                        onTap: () {},
                       ),
                       CustomTextBox(
                         controller: _password,
@@ -84,7 +81,6 @@ class EditProfileScreen extends StatelessWidget {
                         prifixIcon: 'assets/icons/lock.png',
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
-                        onTap: () {},
                       ),
                       CustomTextBox(
                         controller: _confPassword,
@@ -93,7 +89,6 @@ class EditProfileScreen extends StatelessWidget {
                         prifixIcon: 'assets/icons/lock.png',
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
-                        onTap: () {},
                       ),
                       CustomTextBox(
                         controller: _phoneNumber,
@@ -102,7 +97,6 @@ class EditProfileScreen extends StatelessWidget {
                         prifixIcon: 'assets/icons/phone.png',
                         readOnly: true,
                         keyboardType: TextInputType.phone,
-                        onTap: () {},
                       ),
                       SizedBox(
                         height: 15,
@@ -112,7 +106,6 @@ class EditProfileScreen extends StatelessWidget {
                           text: "Confirm",
                           width: 330.0,
                         ),
-                        onTap: () {},
                       ),
                       SizedBox(
                         height: 15,

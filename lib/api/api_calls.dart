@@ -14,13 +14,13 @@ class ApiCalls {
   }) async {
     try {
       var raw = new Map<String, String>();
-      raw['email'] = email;
       raw["first_name"] = fName;
       raw["last_name"] = lName;
-      raw['mobile'] = mobile;
+      raw['email'] = email;
       raw["password"] = password;
+      raw['mobile'] = mobile;
 
-      return ApiCaller.postRequest('/register', data: raw);
+      return ApiCaller.postRequest('/api/users/register', data: raw);
     } catch (e) {
       ApiResponse response = ApiResponse();
       response.isSuccess = false;
@@ -29,14 +29,16 @@ class ApiCalls {
     }
   }
 
-  static Future<ApiResponse> logIn(String username) async {
+  static Future<ApiResponse> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
-      var formData = new Map<String, dynamic>();
-      formData['email'] = 'email';
-      formData['password'] = 'password';
-      Map<String, String> headers = new Map();
-      headers["Accept"] = "*/*";
-      return ApiCaller.postRequest('/login', data: formData, headers: headers);
+      var raw = new Map<String, String>();
+      raw['email'] = email;
+      raw["password"] = password;
+
+      return ApiCaller.postRequest('/api/users/login', data: raw);
     } catch (e) {
       ApiResponse response = ApiResponse();
       response.isSuccess = false;
