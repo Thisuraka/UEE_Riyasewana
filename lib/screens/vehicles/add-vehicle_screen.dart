@@ -56,13 +56,15 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
     }
     setState(() {});
   }
-
+/* 
   void createAd() {
     for (int i = 0; i < _imageFileList!.length; i++) {
       String lala = _imageFileList![i].path;
       print(lala);
+      Helper().upload(File(lala));
+      //have to set cloudinary?
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +78,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
           searchIcon: false,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: createAd,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: createAd,
+      // ),
       body: GestureDetector(
         onTap: () => {FocusScope.of(context).unfocus()},
         child: Container(
@@ -141,10 +143,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Location",
                         itemList: LocationList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vLocation = value;
-                          });
+                        newValue: (value) {
+                          _vLocation = value;
                         },
                         itemValue: _vLocation,
                       ),
@@ -163,10 +163,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Vehicle Type",
                         itemList: VehcileTypeList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vType = value;
-                          });
+                        newValue: (value) {
+                          _vType = value;
                         },
                         itemValue: _vType,
                       ),
@@ -176,10 +174,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Brand",
                         itemList: VehicleBrandList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vBrand = value;
-                          });
+                        newValue: (value) {
+                          _vBrand = value;
                         },
                         itemValue: _vBrand,
                       ),
@@ -189,10 +185,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Condtion",
                         itemList: VehicleConditionList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vCondition = value;
-                          });
+                        newValue: (value) {
+                          _vCondition = value;
                         },
                         itemValue: _vCondition,
                       ),
@@ -292,10 +286,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Transmission type",
                         itemList: VehicleTransmissionList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vTransmission = value;
-                          });
+                        newValue: (value) {
+                          _vTransmission = value;
                         },
                         itemValue: _vTransmission,
                       ),
@@ -305,10 +297,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       CustomDropDown(
                         hint: "Fuel type",
                         itemList: VehicleFuelList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _vFuel = value;
-                          });
+                        newValue: (value) {
+                          _vFuel = value;
                         },
                         itemValue: _vFuel,
                       ),

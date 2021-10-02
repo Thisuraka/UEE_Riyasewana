@@ -34,6 +34,7 @@ dependencies:
   syncfusion_flutter_sliders: ^19.2.62
   connectivity: ^3.0.6
   fluttertoast: ^8.0.8
+  dropdown_search: ^1.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

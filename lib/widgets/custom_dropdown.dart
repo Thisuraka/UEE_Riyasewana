@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../styles.dart';
 
 class CustomDropDown extends StatefulWidget {
   String hint, itemValue;
   List<String> itemList;
-  Function(String value) onSelectionChange;
+  final ValueSetter<String>? newValue;
 
-  CustomDropDown({
-    Key? key,
-    required this.itemValue,
-    required this.itemList,
-    required this.hint,
-    required this.onSelectionChange,
-  }) : super(key: key);
+  CustomDropDown(
+      {Key? key,
+      required this.itemValue,
+      required this.itemList,
+      required this.hint,
+      this.newValue})
+      : super(key: key);
 
   @override
   _CustomDropDownState createState() => _CustomDropDownState();
@@ -38,28 +39,15 @@ class _CustomDropDownState extends State<CustomDropDown> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
       ),
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          labelStyle: HintStyle1,
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          labelText: widget.hint,
-          border: enabledBorder,
-          contentPadding:
-              EdgeInsets.only(bottom: 20.0, left: 25.0, right: 10.0, top: 10.0),
-        ),
-        items: widget.itemList.map((String category) {
-          return new DropdownMenuItem(
-              value: category,
-              child: Text(
-                category,
-                style: TextStyle(fontSize: 14.0),
-              ));
-        }).toList(),
-        onChanged: (newValue) {
-          setState(() {
-            widget.itemValue = newValue as String;
-          });
-        },
+      child: DropdownSearch<String>(
+        mode: Mode.MENU,
+        showSearchBox: true,
+        items: widget.itemList,
+        label: widget.hint,
+        hint: widget.hint,
+        onChanged: (value) => widget.newValue!(value!),
+        selectedItem: widget.itemValue,
+        // dropdownSearchDecoration: InputDecoration(),
       ),
     );
   }

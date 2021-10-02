@@ -114,10 +114,8 @@ class _AddPartScreenState extends State<AddPartScreen> {
                       CustomDropDown(
                         hint: "Location",
                         itemList: LocationList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _pLocation = value;
-                          });
+                        newValue: (value) {
+                          _pLocation = value;
                         },
                         itemValue: _pLocation,
                       ),
@@ -133,30 +131,24 @@ class _AddPartScreenState extends State<AddPartScreen> {
                       CustomDropDown(
                         hint: "Part Type",
                         itemList: PartTypeList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _pType = value;
-                          });
+                        newValue: (value) {
+                          _pType = value;
                         },
                         itemValue: _pType,
                       ),
                       CustomDropDown(
                         hint: "Part Catagory",
                         itemList: PartCatagoryList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _pCatagory = value;
-                          });
+                        newValue: (value) {
+                          _pCatagory = value;
                         },
                         itemValue: _pCatagory,
                       ),
                       CustomDropDown(
                         hint: "Condtion",
                         itemList: PartConditionList,
-                        onSelectionChange: (String value) {
-                          setState(() {
-                            _pCondition = value;
-                          });
+                        newValue: (value) {
+                          _pCondition = value;
                         },
                         itemValue: _pCondition,
                       ),
