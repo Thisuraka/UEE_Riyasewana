@@ -22,10 +22,12 @@ class _AddPartScreenState extends State<AddPartScreen> {
 
   List<XFile>? _imageFileList = [];
   bool _gen = false;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
+  TextEditingController _vModel = TextEditingController();
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -87,133 +89,144 @@ class _AddPartScreenState extends State<AddPartScreen> {
               Container(
                 margin: EdgeInsets.only(top: 140),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                        child: Text("Contact Information", style: SubHeadStyle),
-                      ),
-                      CustomTextBox2(
-                        controller: _name,
-                        hint: "Name",
-                        labelText: "John Doe",
-                        readOnly: true,
-                        enabled: false,
-                        onTap: () {},
-                      ),
-                      CustomTextBox2(
-                        controller: _phone,
-                        hint: "Phone Number",
-                        labelText: "07777777",
-                        readOnly: true,
-                        enabled: false,
-                        onTap: () {},
-                      ),
-                      CustomDropDown(
-                        hint: "Location",
-                        itemList: LocationList,
-                        newValue: (value) {
-                          _pLocation = value;
-                        },
-                        itemValue: _pLocation,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                        child: Text("Parts Information", style: SubHeadStyle),
-                      ),
-                      CustomDropDown(
-                        hint: "Part Type",
-                        itemList: PartTypeList,
-                        newValue: (value) {
-                          _pType = value;
-                        },
-                        itemValue: _pType,
-                      ),
-                      CustomDropDown(
-                        hint: "Part Catagory",
-                        itemList: PartCatagoryList,
-                        newValue: (value) {
-                          _pCatagory = value;
-                        },
-                        itemValue: _pCatagory,
-                      ),
-                      CustomDropDown(
-                        hint: "Condtion",
-                        itemList: PartConditionList,
-                        newValue: (value) {
-                          _pCondition = value;
-                        },
-                        itemValue: _pCondition,
-                      ),
-                      CustomTextBox2(
-                        controller: _phone,
-                        hint: "Brand / Model",
-                        labelText: "Brand / Model",
-                        readOnly: false,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 240,
-                            child: CustomTextBox2(
-                              controller: _price,
-                              hint: "Price",
-                              labelText: "Price",
-                              readOnly: false,
-                              enabled: true,
-                              onTap: () {},
-                            ),
-                          ),
-                          Container(
-                            width: 50,
-                            height: 60,
-                            child: Checkbox(
-                              value: _pNegotiate,
-                              checkColor: DefaultColor,
-                              onChanged: (value) {
-                                setState(() {
-                                  _pNegotiate = true;
-                                });
-                              },
-                            ),
-                          ),
-                          Container(
-                            height: 60,
-                            width: 80,
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Text("Negotoiate"),
-                          ),
-                          SizedBox(height: 100)
-                        ],
-                      ),
-                      CustomTextBox2(
-                        controller: _addInfo,
-                        minLine: 5,
-                        maxLine: 10,
-                        hint: "Additional information",
-                        labelText: "Additional information",
-                        readOnly: false,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      SizedBox(height: 50),
-                      GestureDetector(
-                        child: CustomButton(
-                          text: "Add part",
-                          width: 330.0,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          margin:
+                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                          child:
+                              Text("Contact Information", style: SubHeadStyle),
                         ),
-                        onTap: () {},
-                      ),
-                    ],
+                        CustomTextBox2(
+                          controller: _name,
+                          hint: "Name",
+                          labelText: "John Doe",
+                          readOnly: true,
+                          enabled: false,
+                        ),
+                        CustomTextBox2(
+                          controller: _phone,
+                          hint: "Phone Number",
+                          labelText: "07777777",
+                          readOnly: true,
+                          enabled: false,
+                        ),
+                        CustomDropDown(
+                          hint: "Location",
+                          itemList: LocationList,
+                          newValue: (value) {
+                            _pLocation = value;
+                          },
+                          itemValue: _pLocation,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          margin:
+                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                          child: Text("Parts Information", style: SubHeadStyle),
+                        ),
+                        CustomDropDown(
+                          hint: "Part Type",
+                          itemList: PartTypeList,
+                          newValue: (value) {
+                            _pType = value;
+                          },
+                          itemValue: _pType,
+                        ),
+                        CustomDropDown(
+                          hint: "Part Catagory",
+                          itemList: PartCatagoryList,
+                          newValue: (value) {
+                            _pCatagory = value;
+                          },
+                          itemValue: _pCatagory,
+                        ),
+                        CustomDropDown(
+                          hint: "Condtion",
+                          itemList: PartConditionList,
+                          newValue: (value) {
+                            _pCondition = value;
+                          },
+                          itemValue: _pCondition,
+                        ),
+                        CustomTextBox2(
+                          controller: _vModel,
+                          hint: "Brand / Model",
+                          labelText: "Brand / Model",
+                          readOnly: false,
+                          enabled: true,
+                          validator: (_vModel) {
+                            if (_vModel.isEmpty) {
+                              return "Please enter the model";
+                            }
+                            return null;
+                          },
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 240,
+                              child: CustomTextBox2(
+                                controller: _price,
+                                hint: "Price",
+                                labelText: "Price",
+                                readOnly: false,
+                                enabled: true,
+                                validator: (_price) {
+                                  if (_price.isEmpty) {
+                                    return "Please enter the price";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 60,
+                              child: Checkbox(
+                                value: _pNegotiate,
+                                checkColor: DefaultColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _pNegotiate = true;
+                                  });
+                                },
+                              ),
+                            ),
+                            Container(
+                              height: 60,
+                              width: 80,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Text("Negotoiate"),
+                            ),
+                            SizedBox(height: 100)
+                          ],
+                        ),
+                        CustomTextBox2(
+                          controller: _addInfo,
+                          minLine: 5,
+                          maxLine: 10,
+                          hint: "Additional information",
+                          labelText: "Additional information",
+                          readOnly: false,
+                          enabled: true,
+                        ),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                          child: CustomButton(
+                            text: "Add part",
+                            width: 330.0,
+                          ),
+                          onTap: () {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

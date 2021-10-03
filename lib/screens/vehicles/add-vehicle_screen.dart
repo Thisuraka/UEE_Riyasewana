@@ -28,6 +28,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
 
   List<XFile>? _imageFileList = [];
   bool _gen = false;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _lName = TextEditingController();
@@ -37,6 +38,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
   TextEditingController _milage = TextEditingController();
+  TextEditingController _vModel = TextEditingController();
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -56,15 +58,17 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
     }
     setState(() {});
   }
-/* 
+
   void createAd() {
-    for (int i = 0; i < _imageFileList!.length; i++) {
+    if (_formKey.currentState!.validate()) {}
+
+    /*  for (int i = 0; i < _imageFileList!.length; i++) {
       String lala = _imageFileList![i].path;
       print(lala);
       Helper().upload(File(lala));
       //have to set cloudinary?
-    }
-  } */
+    } */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,231 +114,287 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
               Container(
                 margin: EdgeInsets.only(top: 140),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                        child: Text("Contact Information", style: SubHeadStyle),
-                      ),
-                      CustomTextBox2(
-                        controller: _name,
-                        hint: "Name",
-                        labelText: "John Doe",
-                        readOnly: true,
-                        enabled: false,
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextBox2(
-                        controller: _phone,
-                        hint: "Phone Number",
-                        labelText: "07777777",
-                        readOnly: true,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomDropDown(
-                        hint: "Location",
-                        itemList: LocationList,
-                        newValue: (value) {
-                          _vLocation = value;
-                        },
-                        itemValue: _vLocation,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                        child: Text("Vehicle Information", style: SubHeadStyle),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomDropDown(
-                        hint: "Vehicle Type",
-                        itemList: VehcileTypeList,
-                        newValue: (value) {
-                          _vType = value;
-                        },
-                        itemValue: _vType,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomDropDown(
-                        hint: "Brand",
-                        itemList: VehicleBrandList,
-                        newValue: (value) {
-                          _vBrand = value;
-                        },
-                        itemValue: _vBrand,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomDropDown(
-                        hint: "Condtion",
-                        itemList: VehicleConditionList,
-                        newValue: (value) {
-                          _vCondition = value;
-                        },
-                        itemValue: _vCondition,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextBox2(
-                        controller: _phone,
-                        hint: "Model",
-                        labelText: "Model",
-                        readOnly: false,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 15, right: 15),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
-                          height: 52.0,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 0.5),
-                          ),
-                          child: Text(
-                            "Manufactury Year",
-                            style: HintStyle1,
-                          ),
+                          margin:
+                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                          child:
+                              Text("Contact Information", style: SubHeadStyle),
                         ),
-                        onTap: () => {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Select Year"),
-                                  content: Container(
-                                    width: 200,
-                                    height: 200,
-                                    child: YearPicker(
-                                      firstDate: DateTime(
-                                          DateTime.now().year - 100, 1),
-                                      lastDate: DateTime(
-                                          DateTime.now().year + 100, 1),
-                                      initialDate: _Manf,
-                                      selectedDate: _Manf,
-                                      onChanged: (DateTime dateTime) {
-                                        // _manftext = _Manf;
-                                        Navigator.pop(context);
-                                      },
+                        CustomTextBox2(
+                          controller: _name,
+                          hint: "Name",
+                          labelText: "John Doe",
+                          readOnly: true,
+                          enabled: false,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _phone,
+                          hint: "Phone Number",
+                          labelText: "07777777",
+                          readOnly: true,
+                          enabled: true,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Location",
+                          itemList: LocationList,
+                          newValue: (value) {
+                            _vLocation = value;
+                          },
+                          itemValue: _vLocation,
+                          validator: (_vLocation) {
+                            if (_vLocation.isEmpty) {
+                              return "Please pick location";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          margin:
+                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                          child:
+                              Text("Vehicle Information", style: SubHeadStyle),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Vehicle Type",
+                          itemList: VehcileTypeList,
+                          newValue: (value) {
+                            _vType = value;
+                          },
+                          itemValue: _vType,
+                          validator: (_vType) {
+                            if (_vType.isEmpty) {
+                              return "Please pick type";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Brand",
+                          itemList: VehicleBrandList,
+                          newValue: (value) {
+                            _vBrand = value;
+                          },
+                          itemValue: _vBrand,
+                          validator: (_vBrand) {
+                            if (_vBrand.isEmpty) {
+                              return "Please pick brand";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Condtion",
+                          itemList: VehicleConditionList,
+                          newValue: (value) {
+                            _vCondition = value;
+                          },
+                          itemValue: _vCondition,
+                          validator: (_vCondition) {
+                            if (_vCondition.isEmpty) {
+                              return "Please pick condition";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _vModel,
+                          hint: "Model",
+                          labelText: "Model",
+                          readOnly: false,
+                          enabled: true,
+                          validator: (_vModel) {
+                            if (_vModel.isEmpty) {
+                              return "Please enter the model";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 15, right: 15),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            height: 52.0,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black, width: 0.5),
+                            ),
+                            child: Text(
+                              "Manufactury Year",
+                              style: HintStyle1,
+                            ),
+                          ),
+                          onTap: () => {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Select Year"),
+                                    content: Container(
+                                      width: 200,
+                                      height: 200,
+                                      child: YearPicker(
+                                        firstDate: DateTime(
+                                            DateTime.now().year - 100, 1),
+                                        lastDate: DateTime(
+                                            DateTime.now().year + 100, 1),
+                                        initialDate: _Manf,
+                                        selectedDate: _Manf,
+                                        onChanged: (DateTime dateTime) {
+                                          // _manftext = _Manf;
+                                          Navigator.pop(context);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                );
-                              })
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 240,
-                            child: CustomTextBox2(
-                              controller: _price,
-                              hint: "Price",
-                              labelText: "Price",
-                              readOnly: false,
-                              enabled: true,
-                              onTap: () {},
-                            ),
-                          ),
-                          Container(
-                            width: 50,
-                            height: 60,
-                            child: Checkbox(
-                              value: _pNegotiate,
-                              checkColor: DefaultColor,
-                              onChanged: (value) {
-                                setState(() {
-                                  _pNegotiate = true;
-                                });
-                              },
-                            ),
-                          ),
-                          Container(
-                            height: 60,
-                            width: 80,
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Text("Negotoiate"),
-                          ),
-                          SizedBox(height: 100)
-                        ],
-                      ),
-                      CustomDropDown(
-                        hint: "Transmission type",
-                        itemList: VehicleTransmissionList,
-                        newValue: (value) {
-                          _vTransmission = value;
-                        },
-                        itemValue: _vTransmission,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomDropDown(
-                        hint: "Fuel type",
-                        itemList: VehicleFuelList,
-                        newValue: (value) {
-                          _vFuel = value;
-                        },
-                        itemValue: _vFuel,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextBox2(
-                        controller: _milage,
-                        hint: "Milage",
-                        labelText: "Milage",
-                        readOnly: true,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CustomTextBox2(
-                        controller: _addInfo,
-                        minLine: 5,
-                        maxLine: 10,
-                        hint: "Additional information",
-                        labelText: "Additional information",
-                        readOnly: false,
-                        enabled: true,
-                        onTap: () {},
-                      ),
-                      SizedBox(height: 50),
-                      GestureDetector(
-                        child: CustomButton(
-                          text: "Add vehicle",
-                          width: 330.0,
+                                  );
+                                })
+                          },
                         ),
-                        onTap: () {},
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 240,
+                              child: CustomTextBox2(
+                                controller: _price,
+                                hint: "Price",
+                                labelText: "Price",
+                                readOnly: false,
+                                enabled: true,
+                                validator: (_price) {
+                                  if (_price.isEmpty) {
+                                    return "Please enter the price";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 60,
+                              child: Checkbox(
+                                value: _pNegotiate,
+                                checkColor: DefaultColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _pNegotiate = !_pNegotiate;
+                                  });
+                                },
+                              ),
+                            ),
+                            Container(
+                              height: 60,
+                              width: 80,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Text("Negotoiate"),
+                            ),
+                            SizedBox(height: 100)
+                          ],
+                        ),
+                        CustomDropDown(
+                          hint: "Transmission type",
+                          itemList: VehicleTransmissionList,
+                          newValue: (value) {
+                            _vTransmission = value;
+                          },
+                          itemValue: _vTransmission,
+                          validator: (_vTransmission) {
+                            if (_vTransmission.isEmpty) {
+                              return "Please pick transmission type";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomDropDown(
+                          hint: "Fuel type",
+                          itemList: VehicleFuelList,
+                          newValue: (value) {
+                            _vFuel = value;
+                          },
+                          itemValue: _vFuel,
+                          validator: (_vFuel) {
+                            if (_vFuel.isEmpty) {
+                              return "Please pick fuel type";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _milage,
+                          hint: "Milage",
+                          labelText: "Milage",
+                          readOnly: true,
+                          enabled: true,
+                          validator: (_milage) {
+                            if (_milage.isEmpty) {
+                              return "Please enter the milage";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextBox2(
+                          controller: _addInfo,
+                          minLine: 5,
+                          maxLine: 10,
+                          hint: "Additional information",
+                          labelText: "Additional information",
+                          readOnly: false,
+                          enabled: true,
+                        ),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                          child: CustomButton(
+                            text: "Add vehicle",
+                            width: 330.0,
+                          ),
+                          onTap: () {
+                            createAd();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

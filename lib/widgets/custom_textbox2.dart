@@ -11,24 +11,25 @@ class CustomTextBox2 extends StatelessWidget {
   String hint;
   TextStyle hintStyle;
   String labelText;
-  Function onTap;
+  String? Function(dynamic)? validator;
   bool enabled;
 
   bool obscureText;
 
-  CustomTextBox2(
-      {required this.controller,
-      required this.hint,
-      this.textCapitalization = TextCapitalization.none,
-      this.keyboardType = TextInputType.text,
-      this.readOnly = false,
-      this.minLine = 1,
-      this.maxLine = 1,
-      this.hintStyle = HintStyle1,
-      required this.labelText,
-      this.obscureText = false,
-      required this.enabled,
-      required this.onTap});
+  CustomTextBox2({
+    required this.controller,
+    required this.hint,
+    this.textCapitalization = TextCapitalization.none,
+    this.keyboardType = TextInputType.text,
+    this.readOnly = false,
+    this.minLine = 1,
+    this.maxLine = 1,
+    this.hintStyle = HintStyle1,
+    required this.labelText,
+    this.obscureText = false,
+    required this.enabled,
+    this.validator,
+  });
 
   static InputBorder enabledBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: Colors.black, width: 0.5),
@@ -50,12 +51,10 @@ class CustomTextBox2 extends StatelessWidget {
           keyboardType: keyboardType,
           autofocus: false,
           textCapitalization: textCapitalization,
+          validator: validator,
           controller: controller,
           obscureText: obscureText,
           readOnly: readOnly,
-          onTap: () {
-            onTap;
-          },
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.grey[50],

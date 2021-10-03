@@ -35,6 +35,7 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
   TextEditingController _milage = TextEditingController();
+  TextEditingController _vModel = TextEditingController();
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -110,7 +111,6 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                         labelText: "John Doe",
                         readOnly: true,
                         enabled: false,
-                        onTap: () {},
                       ),
                       SizedBox(
                         height: 10,
@@ -121,7 +121,6 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                         labelText: "07777777",
                         readOnly: true,
                         enabled: true,
-                        onTap: () {},
                       ),
                       SizedBox(
                         height: 10,
@@ -180,12 +179,17 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                         height: 10,
                       ),
                       CustomTextBox2(
-                        controller: _phone,
+                        controller: _vModel,
                         hint: "Model",
                         labelText: "Model",
                         readOnly: false,
                         enabled: true,
-                        onTap: () {},
+                        validator: (_vModel) {
+                          if (_vModel.isEmpty) {
+                            return "Please enter the model";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: 10,
@@ -244,7 +248,12 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                               labelText: "Price",
                               readOnly: false,
                               enabled: true,
-                              onTap: () {},
+                              validator: (_price) {
+                                if (_price.isEmpty) {
+                                  return "Please enter the price";
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           Container(
@@ -292,13 +301,17 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                         height: 10,
                       ),
                       CustomTextBox2(
-                        controller: _milage,
-                        hint: "Milage",
-                        labelText: "Milage",
-                        readOnly: true,
-                        enabled: true,
-                        onTap: () {},
-                      ),
+                          controller: _milage,
+                          hint: "Milage",
+                          labelText: "Milage",
+                          readOnly: true,
+                          enabled: true,
+                          validator: (_milage) {
+                            if (_milage.isEmpty) {
+                              return "Please enter the milage";
+                            }
+                            return null;
+                          }),
                       SizedBox(
                         height: 10,
                       ),
@@ -310,7 +323,6 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                         labelText: "Additional information",
                         readOnly: false,
                         enabled: true,
-                        onTap: () {},
                       ),
                       SizedBox(height: 50),
                       GestureDetector(

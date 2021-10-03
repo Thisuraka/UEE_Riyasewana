@@ -7,9 +7,11 @@ class CustomDropDown extends StatefulWidget {
   String hint, itemValue;
   List<String> itemList;
   final ValueSetter<String>? newValue;
+  String? Function(dynamic)? validator;
 
   CustomDropDown(
       {Key? key,
+      this.validator,
       required this.itemValue,
       required this.itemList,
       required this.hint,
@@ -21,12 +23,17 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  late InputBorder enabledBorder;
+  static InputBorder errorBorder =
+      OutlineInputBorder(borderSide: BorderSide(color: Colors.red));
+
+  static InputBorder enabledBorder = OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Color(0xFFA5A5A5),
+    ),
+  );
 
   @override
   void initState() {
-    enabledBorder = OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.black, width: 0.5));
     super.initState();
   }
 
@@ -35,7 +42,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
     return Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0.0),
-      height: 52.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
       ),
@@ -43,11 +49,18 @@ class _CustomDropDownState extends State<CustomDropDown> {
         mode: Mode.MENU,
         showSearchBox: true,
         items: widget.itemList,
-        label: widget.hint,
-        hint: widget.hint,
+        validator: widget.validator,
         onChanged: (value) => widget.newValue!(value!),
         selectedItem: widget.itemValue,
-        // dropdownSearchDecoration: InputDecoration(),
+        dropdownSearchDecoration: InputDecoration(
+          labelText: widget.hint,
+          hintText: widget.hint,
+          focusedBorder: enabledBorder,
+          enabledBorder: enabledBorder,
+          errorBorder: errorBorder,
+          contentPadding:
+              EdgeInsets.only(left: 20, right: 10, top: 0.0, bottom: 0.0),
+        ),
       ),
     );
   }

@@ -26,6 +26,7 @@ class _EditPartScreenState extends State<EditPartScreen> {
   TextEditingController _phone = TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
+TextEditingController _vModel = TextEditingController();
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -101,7 +102,7 @@ class _EditPartScreenState extends State<EditPartScreen> {
                         labelText: "John Doe",
                         readOnly: true,
                         enabled: false,
-                        onTap: () {},
+                       
                       ),
                       CustomTextBox2(
                         controller: _phone,
@@ -109,7 +110,7 @@ class _EditPartScreenState extends State<EditPartScreen> {
                         labelText: "07777777",
                         readOnly: true,
                         enabled: true,
-                        onTap: () {},
+                      
                       ),
                       CustomDropDown(
                         hint: "Location",
@@ -153,12 +154,17 @@ class _EditPartScreenState extends State<EditPartScreen> {
                         itemValue: _pCondition,
                       ),
                       CustomTextBox2(
-                        controller: _phone,
+                        controller: _vModel,
                         hint: "Brand / Model",
                         labelText: "Brand / Model",
                         readOnly: false,
                         enabled: true,
-                        onTap: () {},
+                        validator: (_vModel) {
+                            if (_vModel.isEmpty) {
+                              return "Please enter the model";
+                            }
+                            return null;
+                          },
                       ),
                       Row(
                         children: [
@@ -170,7 +176,13 @@ class _EditPartScreenState extends State<EditPartScreen> {
                               labelText: "Price",
                               readOnly: false,
                               enabled: true,
-                              onTap: () {},
+                           
+                              validator: (_price) {
+                            if (_price.isEmpty) {
+                              return "Please enter the price";
+                            }
+                            return null;
+                          },
                             ),
                           ),
                           Container(
@@ -203,7 +215,7 @@ class _EditPartScreenState extends State<EditPartScreen> {
                         labelText: "Additional information",
                         readOnly: false,
                         enabled: true,
-                        onTap: () {},
+             
                       ),
                       SizedBox(height: 50),
                       GestureDetector(
