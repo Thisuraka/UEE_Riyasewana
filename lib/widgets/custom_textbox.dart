@@ -6,6 +6,7 @@ class CustomTextBox extends StatelessWidget {
   TextCapitalization textCapitalization;
   TextInputType keyboardType;
   bool readOnly;
+  bool enabled;
   int minLine;
   int maxLine;
   String hint;
@@ -22,6 +23,7 @@ class CustomTextBox extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.keyboardType = TextInputType.text,
     this.readOnly = false,
+    this.enabled = true,
     this.minLine = 1,
     this.maxLine = 1,
     this.hintStyle = HintStyle1,
@@ -68,7 +70,7 @@ class CustomTextBox extends StatelessWidget {
             // focusedBorder: enabledBorder,
             errorBorder: errorBorder,
             focusedErrorBorder: errorBorder,
-            enabled: true,
+            enabled: enabled,
           ),
         ),
       ),

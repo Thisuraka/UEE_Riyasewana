@@ -4,20 +4,43 @@ import 'package:riyasewana/screens/parts/add-part_screen.dart';
 import 'package:riyasewana/screens/vehicles/add-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:blur/blur.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/custom_bottomNavBar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/horizontal_card.dart';
 
-@override
-void initState() {}
+class UserProfile extends StatefulWidget {
+  _UserProfileState createState() => _UserProfileState();
+}
 
-class UserProfile extends StatelessWidget {
+class _UserProfileState extends State<UserProfile> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _name = "Jane Doe";
-  String _email = "janedoe@gmail.com";
-  String _phoneNumber = "07777777";
+  String uName = "";
+  String _fName = "";
+  String _lName = "";
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _phoneNumber = "";
 
   String profileImg = 'assets/images/avatar.jpg';
+
+  void getUser() async {
+    await Settings.getUserID().then((value) => {_uid = value!});
+    await Settings.getFName().then((value) => {_fName = value!});
+    await Settings.getLName().then((value) => {_lName = value!});
+    await Settings.getUserEmail().then((value) => {_email = value!});
+    await Settings.getUserPhone().then((value) => {_phoneNumber = value!});
+
+    uName = _fName + " " + _lName;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +110,7 @@ class UserProfile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        _name,
+                        uName,
                         style: ProfileDataStyle,
                       ),
                     ),

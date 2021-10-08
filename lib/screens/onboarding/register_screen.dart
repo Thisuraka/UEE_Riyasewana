@@ -59,11 +59,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             String userID = json['_id'];
             await Settings.setUserID(userID);
             String fName = json['first_name'];
+            await Settings.setFName(fName);
             String lName = json['last_name'];
-            String userName = fName + ' ' + lName;
-            await Settings.setUserName(userName);
+            await Settings.setLName(lName);
             String userPhone = json['mobile'];
             await Settings.setUserPhone(userPhone);
+            String userEmail = json['email'];
+            await Settings.setUserEmail(userEmail);
             _reset();
 
             Fluttertoast.showToast(

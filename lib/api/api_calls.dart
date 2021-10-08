@@ -6,7 +6,10 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'api_caller.dart';
 import 'api_response.dart';
-// import 'package:dio/dio.dart';
+import 'package:cloudinary_sdk/cloudinary_sdk.dart';
+
+final cloudinary =
+    Cloudinary("335379322996961", "dH53tq2_D4rg_VyckVnIbYfui4o", "asqarrsl");
 
 class ApiCalls {
   static Future<ApiResponse> signUp({
@@ -42,9 +45,6 @@ class ApiCalls {
       raw['email'] = email;
       raw["password"] = password;
 
-      print(raw['email']);
-      print(raw["password"]);
-
       return ApiCaller.postRequest('/api/users/login', data: raw);
     } catch (e) {
       ApiResponse response = ApiResponse();
@@ -63,9 +63,23 @@ class ApiCalls {
     required String pNegotiate,
     required String pInfo,
     required String pLocation,
-    required List<XFile>? pImages,
+    required List<String> pImages,
   }) async {
     try {
+      List<String?> urlPhotos = [];
+
+      List<CloudinaryResponse> reply = await cloudinary.uploadFiles(
+        filePaths: pImages,
+        resourceType: CloudinaryResourceType.auto,
+        folder: "UEE",
+      );
+
+      reply.forEach((response) {
+        if (response.isSuccessful) {
+          urlPhotos.add(response.secureUrl);
+        }
+      });
+
       var data = new Map<String, String>();
       data['pCatagory'] = pCatagory;
       data["pCondition"] = pCondition;
@@ -74,25 +88,72 @@ class ApiCalls {
       data["pNegotiate"] = pNegotiate;
       data["pInfo"] = pInfo;
       data["pLocation"] = pLocation;
-      // data["image"] = pImages!.map((e) => e.path).toList().join(', ');
-
-      List<MultipartFile>? files = [];
-      if (pImages != null && pImages.length > 0) {
-        for (var i = 0; i < pImages.length; i++) {
-          final length = await pImages[i].length();
-          MediaType mediaType = new MediaType('image', 'jpeg');
-          var filePart = http.MultipartFile(
-              'image' + (i + 1).toString(), pImages[i].openRead(), length,
-              contentType: mediaType, filename: '$i' + '.jpg');
-          files.add(filePart);
-        }
-      }
+      data["images"] = urlPhotos.map((e) => e).toList().join(',');
 
       Map<String, String> headers = new Map();
       headers['x-access-token'] = token;
       headers["Accept"] = "multipart/form-data";
 
       return ApiCaller.postRequest('/api/parts', data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> vehiclesAd({
+    required String token,
+    required String vLocation,
+    required String vType,
+    required String vBrand,
+    required String vCondition,
+    required String vModel,
+    required String vPrice,
+    required String vManf,
+    required String vNegotiate,
+    required String vTransmission,
+    required String vFuel,
+    required String vMilage,
+    required String vInfo,
+    required List<String> vImages,
+  }) async {
+    try {
+      List<String?> urlPhotos = [];
+      List<CloudinaryResponse> reply = await cloudinary.uploadFiles(
+        filePaths: vImages,
+        resourceType: CloudinaryResourceType.auto,
+        folder: "UEE",
+      );
+
+      reply.forEach((response) {
+        if (response.isSuccessful) {
+          urlPhotos.add(response.secureUrl);
+        }
+      });
+
+      var data = new Map<String, String>();
+      data['vLocation'] = vLocation;
+      data["vType"] = vType;
+      data["vBrand"] = vBrand;
+      data["vCondition"] = vCondition;
+      data["vModel"] = vModel;
+      data["vManfYear"] = vManf;
+      data["vPrice"] = vPrice;
+      data["vNegotiate"] = vNegotiate;
+      data["vTransType"] = vTransmission;
+      data["vFuelType"] = vFuel;
+      data["vMilage"] = vMilage;
+      data["vInfo"] = vInfo;
+      data["images"] = urlPhotos.map((e) => e).toList().join(',');
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.postRequest('/api/vehicles',
+          data: data, headers: headers);
     } catch (e) {
       ApiResponse response = ApiResponse();
       response.isSuccess = false;

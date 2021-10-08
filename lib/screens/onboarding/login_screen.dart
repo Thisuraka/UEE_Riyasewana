@@ -26,11 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _reset() {
-      _emailAddress = TextEditingController();
-      _password = TextEditingController();
-    }
-
     void _signin() async {
       if (_formKey.currentState!.validate()) {
         final response = await ApiCalls.signIn(
@@ -43,13 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
           String userID = json['_id'];
           await Settings.setUserID(userID);
           String fName = json['first_name'];
+          await Settings.setFName(fName);
           String lName = json['last_name'];
-          String userName = fName + ' ' + lName;
-          await Settings.setUserName(userName);
+          await Settings.setLName(lName);
           String userPhone = json['mobile'];
           await Settings.setUserPhone(userPhone);
-
-          _reset();
+          String userEmail = json['email'];
+          await Settings.setUserEmail(userEmail);
 
           Fluttertoast.showToast(
             msg: "Welcome",

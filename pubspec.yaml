@@ -26,6 +26,7 @@ dependencies:
 
   flutter_animator: ^3.1.2
   smooth_page_indicator: ^1.0.0+2
+  fluttertoast: ^8.0.8
   blur: ^3.0.0
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.8
@@ -33,10 +34,8 @@ dependencies:
   multi_image_picker: ^4.8.0
   syncfusion_flutter_sliders: ^19.2.62
   connectivity: ^3.0.6
-  fluttertoast: ^8.0.8
-  dropdown_search: ^1.0.0
-  dio: ^4.0.0
-
+  cloudinary_sdk: ^3.0.0+6
+  dropdown_search: ^1.0.0 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
 

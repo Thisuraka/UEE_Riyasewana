@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/utils/helper.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/custom_dropdown.dart';
@@ -16,6 +19,12 @@ class AddVehicleScreen extends StatefulWidget {
 }
 
 class _AddVehicleScreenState extends State<AddVehicleScreen> {
+  String _token = "";
+  String _uNname = "";
+  String _fName = "";
+  String _lName = "";
+  String _uPhone = "";
+
   String _vLocation = "";
   String _vType = "";
   String _vBrand = "";
@@ -24,21 +33,35 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   String _vFuel = "";
   String _manftext = "Manufactury year";
   DateTime _Manf = DateTime.now();
-  bool _pNegotiate = false;
+  bool _vNegotiate = false;
 
   List<XFile>? _imageFileList = [];
+  List<String> _imgPaths = [];
   bool _gen = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
-  TextEditingController _lName = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _confPassword = TextEditingController();
-  TextEditingController _phoneNumber = TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
   TextEditingController _milage = TextEditingController();
   TextEditingController _vModel = TextEditingController();
+
+  @override
+  void initState() {
+    getUserData();
+    print(_uNname);
+    print(_uPhone);
+  }
+
+  void getUserData() async {
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    await Settings.getFName().then((value) => {_fName = value!});
+    await Settings.getLName().then((value) => {_lName = value!});
+    await Settings.getUserPhone().then((value) => {_uPhone = value!});
+
+    _uNname = _fName + " " + _lName;
+    setState(() {});
+  }
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -59,15 +82,60 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
     setState(() {});
   }
 
-  void createAd() {
-    if (_formKey.currentState!.validate()) {}
+  void newAd() async {
+    if (_formKey.currentState!.validate()) {
+      if (_imageFileList!.length < 1) {
+        Fluttertoast.showToast(
+          msg: "Please add images",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      } else {
+        for (int i = 0; i < _imageFileList!.length; i++) {
+          _imgPaths.add(_imageFileList![i].path);
+        }
 
-    /*  for (int i = 0; i < _imageFileList!.length; i++) {
-      String lala = _imageFileList![i].path;
-      print(lala);
-      Helper().upload(File(lala));
-      //have to set cloudinary?
-    } */
+        final response = await ApiCalls.vehiclesAd(
+          token: _token,
+          vLocation: _vLocation,
+          vType: _vType,
+          vBrand: _vBrand,
+          vCondition: _vCondition,
+          vModel: _vModel.text,
+          vPrice: _price.text,
+          vManf: _Manf.year.toString(),
+          vNegotiate: _vNegotiate.toString(),
+          vTransmission: _vTransmission,
+          vFuel: _vFuel,
+          vMilage: _milage.text,
+          vInfo: _addInfo.text,
+          vImages: _imgPaths,
+        );
+
+        print(response.apiStatus);
+        if (response.isSuccess) {
+          var json = response.jsonBody;
+
+          print(json);
+
+          Fluttertoast.showToast(
+            msg: "Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => UserProfile()));
+
+          _imgPaths.clear();
+        } else {
+          Fluttertoast.showToast(
+            msg: "Something went wrong",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
+        }
+      }
+    }
   }
 
   @override
@@ -128,7 +196,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                         CustomTextBox2(
                           controller: _name,
                           hint: "Name",
-                          labelText: "John Doe",
+                          labelText: _uNname,
                           readOnly: true,
                           enabled: false,
                         ),
@@ -138,7 +206,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                         CustomTextBox2(
                           controller: _phone,
                           hint: "Phone Number",
-                          labelText: "07777777",
+                          labelText: _uPhone,
                           readOnly: true,
                           enabled: true,
                         ),
@@ -251,8 +319,12 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                   Border.all(color: Colors.black, width: 0.5),
                             ),
                             child: Text(
-                              "Manufactury Year",
-                              style: HintStyle1,
+                              _Manf == DateTime.now()
+                                  ? _manftext
+                                  : _Manf.year.toString(),
+                              style: _Manf == DateTime.now()
+                                  ? HintStyle1
+                                  : TextStyle(color: Colors.black),
                             ),
                           ),
                           onTap: () => {
@@ -272,13 +344,13 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                         initialDate: _Manf,
                                         selectedDate: _Manf,
                                         onChanged: (DateTime dateTime) {
-                                          // _manftext = _Manf;
+                                          _Manf = dateTime;
                                           Navigator.pop(context);
                                         },
                                       ),
                                     ),
                                   );
-                                })
+                                }),
                           },
                         ),
                         SizedBox(
@@ -306,11 +378,11 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                               width: 50,
                               height: 60,
                               child: Checkbox(
-                                value: _pNegotiate,
+                                value: _vNegotiate,
                                 checkColor: DefaultColor,
                                 onChanged: (value) {
                                   setState(() {
-                                    _pNegotiate = !_pNegotiate;
+                                    _vNegotiate = !_vNegotiate;
                                   });
                                 },
                               ),
@@ -362,7 +434,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           controller: _milage,
                           hint: "Milage",
                           labelText: "Milage",
-                          readOnly: true,
+                          readOnly: false,
                           enabled: true,
                           validator: (_milage) {
                             if (_milage.isEmpty) {
@@ -390,7 +462,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                             width: 330.0,
                           ),
                           onTap: () {
-                            createAd();
+                            newAd();
                           },
                         ),
                       ],

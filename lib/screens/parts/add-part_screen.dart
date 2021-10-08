@@ -20,6 +20,8 @@ class AddPartScreen extends StatefulWidget {
 class _AddPartScreenState extends State<AddPartScreen> {
   String _token = "";
   String _uNname = "";
+  String _fName = "";
+  String _lName = "";
   String _uPhone = "";
   String _pLocation = "";
   String _pType = "";
@@ -28,6 +30,7 @@ class _AddPartScreenState extends State<AddPartScreen> {
   bool _pNegotiate = false;
 
   List<XFile>? _imageFileList = [];
+  List<String> _imgPaths = [];
   bool _gen = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
@@ -43,8 +46,12 @@ class _AddPartScreenState extends State<AddPartScreen> {
 
   void getUserData() async {
     await Settings.getAccessToken().then((value) => {_token = value!});
-    await Settings.getUserName().then((value) => {_uNname = value!});
+    await Settings.getFName().then((value) => {_fName = value!});
+    await Settings.getLName().then((value) => {_lName = value!});
     await Settings.getUserPhone().then((value) => {_uPhone = value!});
+
+    _uNname = _fName + " " + _lName;
+    setState(() {});
   }
 
   Future<void> addImage() async {
@@ -75,6 +82,10 @@ class _AddPartScreenState extends State<AddPartScreen> {
           gravity: ToastGravity.CENTER,
         );
       } else {
+        for (int i = 0; i < _imageFileList!.length; i++) {
+          _imgPaths.add(_imageFileList![i].path);
+        }
+
         final response = await ApiCalls.partsAd(
           token: _token,
           pCatagory: _pCatagory,
@@ -84,7 +95,7 @@ class _AddPartScreenState extends State<AddPartScreen> {
           pNegotiate: _pNegotiate.toString(),
           pInfo: _addInfo.text,
           pLocation: _pLocation,
-          pImages: _imageFileList,
+          pImages: _imgPaths,
         );
         print(response.apiStatus);
         if (response.isSuccess) {
@@ -99,6 +110,8 @@ class _AddPartScreenState extends State<AddPartScreen> {
           );
           // Navigator.of(context)
           //     .push(MaterialPageRoute(builder: (context) => UserProfile()));
+
+          _imgPaths.clear();
         } else {
           Fluttertoast.showToast(
             msg: "Something went wrong",
@@ -113,12 +126,6 @@ class _AddPartScreenState extends State<AddPartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton.small(
-      //     onPressed: () => {
-      //           print(_imageFileList!.length),
-      //           for (int i = 0; i < _imageFileList!.length; i++)
-      //             {print(_imageFileList![i])}
-      //         }),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(55),
         child: CustomAppbarWidget(
