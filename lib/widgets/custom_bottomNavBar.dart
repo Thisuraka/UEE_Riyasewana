@@ -1,6 +1,8 @@
 import 'package:riyasewana/screens/account/favorites_screen.dart';
 import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/screens/home_screen.dart';
+import 'package:riyasewana/screens/onboarding/login_screen.dart';
+import 'package:riyasewana/utils/settings.dart';
 
 import '../../styles.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,17 @@ class BottomNavbar extends StatefulWidget {
 class _BottomNavbarState extends State<BottomNavbar> {
   int _currentIndex = 0;
 
+  bool _signed = false;
+
+  getStatus() async {
+    await Settings.getSigned().then((value) => {_signed = value!});
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    getStatus();
   }
 
   void onTabTapped(int index) {
@@ -38,11 +48,17 @@ class _BottomNavbarState extends State<BottomNavbar> {
         );
         break;
       case 2:
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => UserProfile(),
-          ),
-        );
+        _signed
+            ? Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(),
+                ),
+              )
+            : Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
         break;
 
       default:

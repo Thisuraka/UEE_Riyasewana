@@ -1,9 +1,12 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/account/favorites_screen.dart';
 import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/screens/home_screen.dart';
 import 'package:riyasewana/styles.dart';
+import 'package:riyasewana/utils/settings.dart';
 
 class NavDrawer extends StatefulWidget {
   String profileImg = '';
@@ -16,6 +19,46 @@ class NavDrawer extends StatefulWidget {
 
 class _NavDrawerScreen extends State<NavDrawer> {
   String _defaultImg = 'assets/images/nav.jpg';
+  String _token = "";
+  bool _signed = true;
+
+  getStatus() async {
+    await Settings.getSigned().then((value) => {_signed = value!});
+    setState(() {});
+  }
+
+  logOut() async {
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    final response = await ApiCalls.signOut(token: _token);
+    if (response.isSuccess) {
+      await Settings.setSigned(false);
+      await Settings.getSigned().then((value) => {_signed = value!});
+      await Settings.setUserID("");
+      await Settings.setAccessToken("");
+      await Settings.setFName("");
+      await Settings.setLName("");
+      await Settings.setUserPhone("");
+      await Settings.setUserEmail("");
+
+      Fluttertoast.showToast(
+        msg: "Signed out ...",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+      Navigator.of(context).pop();
+    } else {
+      Fluttertoast.showToast(
+        msg: "Signed out ...",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    getStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +147,25 @@ class _NavDrawerScreen extends State<NavDrawer> {
               )
             },
           ),
+          Container(
+            child: _signed
+                ? GestureDetector(
+                    onTap: () => {logOut()},
+                    child: Container(
+                      margin: EdgeInsets.only(left: 117, top: 280),
+                      child: Text(
+                        "Sign out",
+                        style: LogOut,
+                      ),
+                    ),
+                  )
+                : SizedBox(height: 2),
+          ),
           GestureDetector(
             child: Container(
-              margin: EdgeInsets.only(left: 120, top: 320),
+              margin: _signed
+                  ? EdgeInsets.only(left: 120, top: 20)
+                  : EdgeInsets.only(left: 120, top: 320),
               child: Text(
                 "Donate",
                 style: SeeAllStyle,

@@ -38,7 +38,9 @@ class ApiResponse {
   void _processResponse() {
     try {
       if (response != null) {
-        if (!(response!.statusCode == 200 || response!.statusCode == 201)) {
+        if (!(response!.statusCode == 200 ||
+            response!.statusCode == 201 ||
+            response!.statusCode == 202)) {
           if (response!.statusCode >= 400 && response!.statusCode <= 499) {
             _setApiStatus(ApiStatus.CLIENT_ERROR);
             try {
@@ -55,12 +57,12 @@ class ApiResponse {
           _setErrorMessage(response!.reasonPhrase.toString());
         } else {
           jsonBody = _getJsonBody();
-          if (jsonBody != null) {
-            _setApiStatus(ApiStatus.SUCCESS);
-          } else {
-            _setApiStatus(ApiStatus.PARSE_ERROR);
-            _setErrorMessage("Null json response");
-          }
+          // if (jsonBody != null) {
+          _setApiStatus(ApiStatus.SUCCESS);
+          // } else {
+          //   _setApiStatus(ApiStatus.PARSE_ERROR);
+          //   _setErrorMessage("Null json response");
+          // }
         }
       } else {
         _setApiStatus(ApiStatus.PARSE_ERROR);

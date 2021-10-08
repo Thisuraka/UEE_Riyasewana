@@ -54,6 +54,50 @@ class ApiCalls {
     }
   }
 
+  static Future<ApiResponse> signOut({
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+
+      return ApiCaller.postRequest('/api/users/logout', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> updateUser({
+    required String token,
+    required String id,
+    required String fName,
+    required String lName,
+    required String mobile,
+    required String password,
+  }) async {
+    try {
+      var raw = new Map<String, String>();
+      raw["first_name"] = fName;
+      raw["last_name"] = lName;
+      raw["password"] = password;
+      raw['mobile'] = mobile;
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+
+      return ApiCaller.postRequest('/api/users/$id',
+          data: raw, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
   static Future<ApiResponse> partsAd({
     required String token,
     required String pCatagory,

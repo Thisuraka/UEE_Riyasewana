@@ -42,6 +42,12 @@ const SeeAllStyle = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 16.0);
 
+const LogOut = TextStyle(
+    fontFamily: DefaultFont,
+    color: Colors.red,
+    fontWeight: FontWeight.w600,
+    fontSize: 16.0);
+
 const ProfileDataStyle = TextStyle(
     fontFamily: DefaultFont,
     color: Colors.white,

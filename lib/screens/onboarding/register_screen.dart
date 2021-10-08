@@ -54,6 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               password: _password.text);
           if (response.isSuccess) {
             var json = response.jsonBody;
+            await Settings.setSigned(true);
             String accessToken = json['token'];
             await Settings.setAccessToken(accessToken);
             String userID = json['_id'];
