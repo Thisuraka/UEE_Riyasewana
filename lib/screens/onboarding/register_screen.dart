@@ -39,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     void signUp() async {
       if (_formKey.currentState!.validate()) {
-        if (_password != _confPassword) {
+        if (_password.text != _confPassword.text) {
           Fluttertoast.showToast(
             msg: "Password mismatched",
             toastLength: Toast.LENGTH_SHORT,
@@ -54,10 +54,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               password: _password.text);
           if (response.isSuccess) {
             var json = response.jsonBody;
-            String accessToken = json['access_token'];
+            String accessToken = json['token'];
             await Settings.setAccessToken(accessToken);
-            String refreshToken = json['refresh_token'];
-            await Settings.setRefreshToken(refreshToken);
+            String userID = json['_id'];
+            await Settings.setUserID(userID);
+            String fName = json['first_name'];
+            String lName = json['last_name'];
+            String userName = fName + ' ' + lName;
+            await Settings.setUserName(userName);
+            String userPhone = json['mobile'];
+            await Settings.setUserPhone(userPhone);
             _reset();
 
             Fluttertoast.showToast(

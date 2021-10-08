@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:riyasewana/api/api_calls.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/utils/helper.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_button.dart';
 import 'package:riyasewana/widgets/custom_dropdown.dart';
@@ -14,6 +18,9 @@ class AddPartScreen extends StatefulWidget {
 }
 
 class _AddPartScreenState extends State<AddPartScreen> {
+  String _token = "";
+  String _uNname = "";
+  String _uPhone = "";
   String _pLocation = "";
   String _pType = "";
   String _pCatagory = "";
@@ -27,7 +34,18 @@ class _AddPartScreenState extends State<AddPartScreen> {
   TextEditingController _phone = TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
-  TextEditingController _vModel = TextEditingController();
+  TextEditingController _pModel = TextEditingController();
+
+  @override
+  void initState() {
+    getUserData();
+  }
+
+  void getUserData() async {
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    await Settings.getUserName().then((value) => {_uNname = value!});
+    await Settings.getUserPhone().then((value) => {_uPhone = value!});
+  }
 
   Future<void> addImage() async {
     _imageFileList = await Helper.selectImages();
@@ -48,9 +66,59 @@ class _AddPartScreenState extends State<AddPartScreen> {
     setState(() {});
   }
 
+  void newAd() async {
+    if (_formKey.currentState!.validate()) {
+      if (_imageFileList!.length < 1) {
+        Fluttertoast.showToast(
+          msg: "Please add images",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      } else {
+        final response = await ApiCalls.partsAd(
+          token: _token,
+          pCatagory: _pCatagory,
+          pCondition: _pCondition,
+          pName: _pModel.text,
+          pPrice: _price.text,
+          pNegotiate: _pNegotiate.toString(),
+          pInfo: _addInfo.text,
+          pLocation: _pLocation,
+          pImages: _imageFileList,
+        );
+        print(response.apiStatus);
+        if (response.isSuccess) {
+          var json = response.jsonBody;
+
+          print(json);
+
+          Fluttertoast.showToast(
+            msg: "Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => UserProfile()));
+        } else {
+          Fluttertoast.showToast(
+            msg: "Something went wrong",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton.small(
+      //     onPressed: () => {
+      //           print(_imageFileList!.length),
+      //           for (int i = 0; i < _imageFileList!.length; i++)
+      //             {print(_imageFileList![i])}
+      //         }),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(55),
         child: CustomAppbarWidget(
@@ -103,14 +171,14 @@ class _AddPartScreenState extends State<AddPartScreen> {
                         CustomTextBox2(
                           controller: _name,
                           hint: "Name",
-                          labelText: "John Doe",
+                          labelText: _uNname,
                           readOnly: true,
                           enabled: false,
                         ),
                         CustomTextBox2(
                           controller: _phone,
                           hint: "Phone Number",
-                          labelText: "07777777",
+                          labelText: _uPhone,
                           readOnly: true,
                           enabled: false,
                         ),
@@ -121,6 +189,12 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             _pLocation = value;
                           },
                           itemValue: _pLocation,
+                          validator: (_pLocation) {
+                            if (_pLocation.isEmpty) {
+                              return "Please select location";
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(
                           height: 15,
@@ -138,6 +212,12 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             _pType = value;
                           },
                           itemValue: _pType,
+                          validator: (_pType) {
+                            if (_pType.isEmpty) {
+                              return "Please select type";
+                            }
+                            return null;
+                          },
                         ),
                         CustomDropDown(
                           hint: "Part Catagory",
@@ -146,6 +226,12 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             _pCatagory = value;
                           },
                           itemValue: _pCatagory,
+                          validator: (_pCatagory) {
+                            if (_pCatagory.isEmpty) {
+                              return "Please select catagory";
+                            }
+                            return null;
+                          },
                         ),
                         CustomDropDown(
                           hint: "Condtion",
@@ -154,16 +240,22 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             _pCondition = value;
                           },
                           itemValue: _pCondition,
+                          validator: (_pCondition) {
+                            if (_pCondition.isEmpty) {
+                              return "Please select condition";
+                            }
+                            return null;
+                          },
                         ),
                         CustomTextBox2(
-                          controller: _vModel,
+                          controller: _pModel,
                           hint: "Brand / Model",
                           labelText: "Brand / Model",
                           readOnly: false,
                           enabled: true,
                           validator: (_vModel) {
                             if (_vModel.isEmpty) {
-                              return "Please enter the model";
+                              return "Please enter the brand / model";
                             }
                             return null;
                           },
@@ -189,6 +281,7 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             Container(
                               width: 50,
                               height: 60,
+                              padding: EdgeInsets.only(bottom: 20),
                               child: Checkbox(
                                 value: _pNegotiate,
                                 checkColor: DefaultColor,
@@ -202,7 +295,7 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             Container(
                               height: 60,
                               width: 80,
-                              padding: EdgeInsets.symmetric(vertical: 20),
+                              padding: EdgeInsets.only(bottom: 10, top: 10),
                               child: Text("Negotoiate"),
                             ),
                             SizedBox(height: 100)
@@ -223,7 +316,9 @@ class _AddPartScreenState extends State<AddPartScreen> {
                             text: "Add part",
                             width: 330.0,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            newAd();
+                          },
                         ),
                       ],
                     ),

@@ -42,6 +42,13 @@ class _LoginScreenState extends State<LoginScreen> {
           await Settings.setAccessToken(accessToken);
           String userID = json['_id'];
           await Settings.setUserID(userID);
+          String fName = json['first_name'];
+          String lName = json['last_name'];
+          String userName = fName + ' ' + lName;
+          await Settings.setUserName(userName);
+          String userPhone = json['mobile'];
+          await Settings.setUserPhone(userPhone);
+
           _reset();
 
           Fluttertoast.showToast(
