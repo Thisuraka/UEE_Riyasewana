@@ -7,6 +7,7 @@ import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_slider.dart';
 import 'package:riyasewana/widgets/custom_textboxCol.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../styles.dart';
 
 class ViewVehicleScreen extends StatefulWidget {
@@ -184,7 +185,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
               Container(
                 margin: EdgeInsets.only(top: 330),
                 child: GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {launch("tel://214324234")},
                   child: ContactButton(call: true),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:riyasewana/api/api_calls.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/screens/parts/edit-part_screen.dart';
 import 'package:riyasewana/screens/vehicles/edit-vehicle_screen.dart';
 import 'package:riyasewana/utils/settings.dart';
@@ -15,12 +16,14 @@ class HorizontalCard extends StatefulWidget {
   String adCatagory;
   String adPrice;
   String adType;
+  final void Function(bool) onChange;
 
   HorizontalCard({
     required this.adID,
     this.adImg = '',
     this.adBrand = '',
     this.adCatagory = '',
+    required this.onChange,
     required this.adModel,
     required this.adPrice,
     required this.adType,
@@ -113,9 +116,15 @@ class _HorizontalCardState extends State<HorizontalCard> {
           GestureDetector(
             onTap: () => {
               if (widget.adType == "Part")
-                {ApiCalls.deletePartAd(adID: widget.adID, token: _token)}
+                {
+                  ApiCalls.deletePartAd(adID: widget.adID, token: _token),
+                  widget.onChange(true)
+                }
               else if (widget.adType == "Vehicle")
-                {ApiCalls.deleteVehicleAd(adID: widget.adID, token: _token)}
+                {
+                  ApiCalls.deleteVehicleAd(adID: widget.adID, token: _token),
+                  widget.onChange(true)
+                }
               else
                 {null}
             },

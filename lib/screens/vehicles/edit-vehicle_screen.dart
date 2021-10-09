@@ -35,6 +35,10 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
   bool _vNegotiate = false;
   bool _loaded = false;
   int _imgLimiter = 0;
+  String _nameTxt = "";
+  String _lname = "";
+  String _fname = "";
+  String _phoneTxt = "";
 
   List<XFile>? _imageFileList = [];
   List<dynamic>? _cloudImages = [];
@@ -42,17 +46,22 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
   List<String> _cloudImgPaths = [];
   bool _gen = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _price = TextEditingController();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
-  TextEditingController _price = TextEditingController();
   TextEditingController _addInfo = TextEditingController();
   TextEditingController _milage = TextEditingController();
   TextEditingController _vModel = TextEditingController();
 
   void getUser() async {
     await Settings.getAccessToken().then((value) => {_token = value!});
-    setState(() {});
+    await Settings.getFName().then((value) => {_fname = value!});
+    await Settings.getLName().then((value) => {_lname = value!});
+    await Settings.getUserPhone().then((value) => {_phoneTxt = value!});
 
+    _nameTxt = _fname + " " + _lname;
+
+    setState(() {});
     getAdData();
   }
 
@@ -225,7 +234,7 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                               CustomTextBox2(
                                 controller: _name,
                                 hint: "Name",
-                                labelText: "John Doe",
+                                labelText: _nameTxt,
                                 readOnly: true,
                                 enabled: false,
                               ),
@@ -235,7 +244,7 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                               CustomTextBox2(
                                 controller: _phone,
                                 hint: "Phone Number",
-                                labelText: "07777777",
+                                labelText: _phoneTxt,
                                 readOnly: true,
                                 enabled: true,
                               ),
@@ -429,7 +438,7 @@ class _EditVehicleScreenState extends State<EditVehicleScreen> {
                                   controller: _milage,
                                   hint: "Milage",
                                   labelText: "Milage",
-                                  readOnly: true,
+                                  readOnly: false,
                                   enabled: true,
                                   validator: (_milage) {
                                     if (_milage.isEmpty) {

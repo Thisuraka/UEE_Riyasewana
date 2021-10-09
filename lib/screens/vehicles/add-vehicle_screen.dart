@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riyasewana/api/api_calls.dart';
@@ -39,6 +40,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   List<XFile>? _imageFileList = [];
   List<String> _imgPaths = [];
   bool _gen = false;
+
+  bool _loaded = true;
+
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
@@ -95,6 +99,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         for (int i = 0; i < _imageFileList!.length; i++) {
           _imgPaths.add(_imageFileList![i].path);
         }
+        _loaded = false;
 
         final response = await ApiCalls.vehiclesAd(
           token: _token,
@@ -117,7 +122,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         if (response.isSuccess) {
           var json = response.jsonBody;
 
-          print(json);
+          _loaded = true;
 
           Fluttertoast.showToast(
             msg: "Success",
@@ -154,327 +159,337 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
       // floatingActionButton: FloatingActionButton(
       //   onPressed: createAd,
       // ),
-      body: GestureDetector(
-        onTap: () => {FocusScope.of(context).unfocus()},
-        child: Container(
-          height: double.infinity,
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 10),
-          child: Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                  "Photos " + _imageFileList!.length.toString() + "/9",
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
-              GestureDetector(
-                onTap: addImage,
-                child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  width: double.infinity,
-                  height: 100,
-                  child: CustomImagePicker(
-                      _imageFileList, addImage, removeImage,
-                      gen: _gen),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 140),
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          margin:
-                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                          child:
-                              Text("Contact Information", style: SubHeadStyle),
-                        ),
-                        CustomTextBox2(
-                          controller: _name,
-                          hint: "Name",
-                          labelText: _uNname,
-                          readOnly: true,
-                          enabled: false,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextBox2(
-                          controller: _phone,
-                          hint: "Phone Number",
-                          labelText: _uPhone,
-                          readOnly: true,
-                          enabled: true,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomDropDown(
-                          hint: "Location",
-                          itemList: LocationList,
-                          newValue: (value) {
-                            _vLocation = value;
-                          },
-                          itemValue: _vLocation,
-                          validator: (_vLocation) {
-                            if (_vLocation.isEmpty) {
-                              return "Please pick location";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin:
-                              EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                          child:
-                              Text("Vehicle Information", style: SubHeadStyle),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomDropDown(
-                          hint: "Vehicle Type",
-                          itemList: VehcileTypeList,
-                          newValue: (value) {
-                            _vType = value;
-                          },
-                          itemValue: _vType,
-                          validator: (_vType) {
-                            if (_vType.isEmpty) {
-                              return "Please pick type";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomDropDown(
-                          hint: "Brand",
-                          itemList: VehicleBrandList,
-                          newValue: (value) {
-                            _vBrand = value;
-                          },
-                          itemValue: _vBrand,
-                          validator: (_vBrand) {
-                            if (_vBrand.isEmpty) {
-                              return "Please pick brand";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomDropDown(
-                          hint: "Condtion",
-                          itemList: VehicleConditionList,
-                          newValue: (value) {
-                            _vCondition = value;
-                          },
-                          itemValue: _vCondition,
-                          validator: (_vCondition) {
-                            if (_vCondition.isEmpty) {
-                              return "Please pick condition";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextBox2(
-                          controller: _vModel,
-                          hint: "Model",
-                          labelText: "Model",
-                          readOnly: false,
-                          enabled: true,
-                          validator: (_vModel) {
-                            if (_vModel.isEmpty) {
-                              return "Please enter the model";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 15, right: 15),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 15),
-                            height: 52.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 0.5),
-                            ),
-                            child: Text(
-                              _Manf == DateTime.now()
-                                  ? _manftext
-                                  : _Manf.year.toString(),
-                              style: _Manf == DateTime.now()
-                                  ? HintStyle1
-                                  : TextStyle(color: Colors.black),
-                            ),
-                          ),
-                          onTap: () => {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Select Year"),
-                                    content: Container(
-                                      width: 200,
-                                      height: 200,
-                                      child: YearPicker(
-                                        firstDate: DateTime(
-                                            DateTime.now().year - 100, 1),
-                                        lastDate: DateTime(
-                                            DateTime.now().year + 100, 1),
-                                        initialDate: _Manf,
-                                        selectedDate: _Manf,
-                                        onChanged: (DateTime dateTime) {
-                                          _Manf = dateTime;
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 240,
-                              child: CustomTextBox2(
-                                controller: _price,
-                                hint: "Price",
-                                labelText: "Price",
-                                readOnly: false,
+      body: _loaded
+          ? GestureDetector(
+              onTap: () => {FocusScope.of(context).unfocus()},
+              child: Container(
+                height: double.infinity,
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 10),
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 10, left: 20),
+                      child: Text(
+                        "Photos " + _imageFileList!.length.toString() + "/9",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: addImage,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 30),
+                        width: double.infinity,
+                        height: 100,
+                        child: CustomImagePicker(
+                            _imageFileList, addImage, removeImage,
+                            gen: _gen),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 140),
+                      child: SingleChildScrollView(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 15, bottom: 10),
+                                child: Text("Contact Information",
+                                    style: SubHeadStyle),
+                              ),
+                              CustomTextBox2(
+                                controller: _name,
+                                hint: "Name",
+                                labelText: _uNname,
+                                readOnly: true,
+                                enabled: false,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextBox2(
+                                controller: _phone,
+                                hint: "Phone Number",
+                                labelText: _uPhone,
+                                readOnly: true,
                                 enabled: true,
-                                validator: (_price) {
-                                  if (_price.isEmpty) {
-                                    return "Please enter the price";
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomDropDown(
+                                hint: "Location",
+                                itemList: LocationList,
+                                newValue: (value) {
+                                  _vLocation = value;
+                                },
+                                itemValue: _vLocation,
+                                validator: (_vLocation) {
+                                  if (_vLocation.isEmpty) {
+                                    return "Please pick location";
                                   }
                                   return null;
                                 },
                               ),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 60,
-                              child: Checkbox(
-                                value: _vNegotiate,
-                                checkColor: DefaultColor,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _vNegotiate = !_vNegotiate;
-                                  });
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 15, bottom: 10),
+                                child: Text("Vehicle Information",
+                                    style: SubHeadStyle),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomDropDown(
+                                hint: "Vehicle Type",
+                                itemList: VehcileTypeList,
+                                newValue: (value) {
+                                  _vType = value;
+                                },
+                                itemValue: _vType,
+                                validator: (_vType) {
+                                  if (_vType.isEmpty) {
+                                    return "Please pick type";
+                                  }
+                                  return null;
                                 },
                               ),
-                            ),
-                            Container(
-                              height: 60,
-                              width: 80,
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              child: Text("Negotoiate"),
-                            ),
-                            SizedBox(height: 100)
-                          ],
-                        ),
-                        CustomDropDown(
-                          hint: "Transmission type",
-                          itemList: VehicleTransmissionList,
-                          newValue: (value) {
-                            _vTransmission = value;
-                          },
-                          itemValue: _vTransmission,
-                          validator: (_vTransmission) {
-                            if (_vTransmission.isEmpty) {
-                              return "Please pick transmission type";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomDropDown(
-                          hint: "Fuel type",
-                          itemList: VehicleFuelList,
-                          newValue: (value) {
-                            _vFuel = value;
-                          },
-                          itemValue: _vFuel,
-                          validator: (_vFuel) {
-                            if (_vFuel.isEmpty) {
-                              return "Please pick fuel type";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextBox2(
-                          controller: _milage,
-                          hint: "Milage",
-                          labelText: "Milage",
-                          readOnly: false,
-                          enabled: true,
-                          validator: (_milage) {
-                            if (_milage.isEmpty) {
-                              return "Please enter the milage";
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextBox2(
-                          controller: _addInfo,
-                          minLine: 5,
-                          maxLine: 10,
-                          hint: "Additional information",
-                          labelText: "Additional information",
-                          readOnly: false,
-                          enabled: true,
-                        ),
-                        SizedBox(height: 50),
-                        GestureDetector(
-                          child: CustomButton(
-                            text: "Add vehicle",
-                            width: 330.0,
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomDropDown(
+                                hint: "Brand",
+                                itemList: VehicleBrandList,
+                                newValue: (value) {
+                                  _vBrand = value;
+                                },
+                                itemValue: _vBrand,
+                                validator: (_vBrand) {
+                                  if (_vBrand.isEmpty) {
+                                    return "Please pick brand";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomDropDown(
+                                hint: "Condtion",
+                                itemList: VehicleConditionList,
+                                newValue: (value) {
+                                  _vCondition = value;
+                                },
+                                itemValue: _vCondition,
+                                validator: (_vCondition) {
+                                  if (_vCondition.isEmpty) {
+                                    return "Please pick condition";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextBox2(
+                                controller: _vModel,
+                                hint: "Model",
+                                labelText: "Model",
+                                readOnly: false,
+                                enabled: true,
+                                validator: (_vModel) {
+                                  if (_vModel.isEmpty) {
+                                    return "Please enter the model";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 15),
+                                  height: 52.0,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black, width: 0.5),
+                                  ),
+                                  child: Text(
+                                    _Manf == DateTime.now()
+                                        ? _manftext
+                                        : _Manf.year.toString(),
+                                    style: _Manf == DateTime.now()
+                                        ? HintStyle1
+                                        : TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                onTap: () => {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Select Year"),
+                                          content: Container(
+                                            width: 200,
+                                            height: 200,
+                                            child: YearPicker(
+                                              firstDate: DateTime(
+                                                  DateTime.now().year - 100, 1),
+                                              lastDate: DateTime(
+                                                  DateTime.now().year + 100, 1),
+                                              initialDate: _Manf,
+                                              selectedDate: _Manf,
+                                              onChanged: (DateTime dateTime) {
+                                                _Manf = dateTime;
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 240,
+                                    child: CustomTextBox2(
+                                      controller: _price,
+                                      hint: "Price",
+                                      labelText: "Price",
+                                      readOnly: false,
+                                      enabled: true,
+                                      validator: (_price) {
+                                        if (_price.isEmpty) {
+                                          return "Please enter the price";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 50,
+                                    height: 60,
+                                    child: Checkbox(
+                                      value: _vNegotiate,
+                                      checkColor: DefaultColor,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _vNegotiate = !_vNegotiate;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 60,
+                                    width: 80,
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    child: Text("Negotoiate"),
+                                  ),
+                                  SizedBox(height: 100)
+                                ],
+                              ),
+                              CustomDropDown(
+                                hint: "Transmission type",
+                                itemList: VehicleTransmissionList,
+                                newValue: (value) {
+                                  _vTransmission = value;
+                                },
+                                itemValue: _vTransmission,
+                                validator: (_vTransmission) {
+                                  if (_vTransmission.isEmpty) {
+                                    return "Please pick transmission type";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomDropDown(
+                                hint: "Fuel type",
+                                itemList: VehicleFuelList,
+                                newValue: (value) {
+                                  _vFuel = value;
+                                },
+                                itemValue: _vFuel,
+                                validator: (_vFuel) {
+                                  if (_vFuel.isEmpty) {
+                                    return "Please pick fuel type";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextBox2(
+                                controller: _milage,
+                                hint: "Milage",
+                                labelText: "Milage",
+                                readOnly: false,
+                                enabled: true,
+                                validator: (_milage) {
+                                  if (_milage.isEmpty) {
+                                    return "Please enter the milage";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextBox2(
+                                controller: _addInfo,
+                                minLine: 5,
+                                maxLine: 10,
+                                hint: "Additional information",
+                                labelText: "Additional information",
+                                readOnly: false,
+                                enabled: true,
+                              ),
+                              SizedBox(height: 50),
+                              GestureDetector(
+                                child: CustomButton(
+                                  text: "Add vehicle",
+                                  width: 330.0,
+                                ),
+                                onTap: () {
+                                  newAd();
+                                },
+                              ),
+                            ],
                           ),
-                          onTap: () {
-                            newAd();
-                          },
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            )
+          : SpinKitFoldingCube(
+              itemBuilder: (BuildContext context, int index) {
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: index.isEven ? DefaultColor : InactiveColor,
+                  ),
+                );
+              },
+            ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/onboarding/register_screen.dart';
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailAddress = TextEditingController();
   TextEditingController _password = TextEditingController();
-
+  bool _loaded = true;
   @override
   Widget build(BuildContext context) {
     void _signin() async {
@@ -74,120 +75,133 @@ class _LoginScreenState extends State<LoginScreen> {
           searchIcon: false,
         ),
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Container(
-          height: double.infinity,
-          width: MediaQuery.of(context).size.width,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, top: 30),
-                    child: Text("Riyasewana",
-                        style: TextStyle(
-                            fontFamily: DefaultFont,
-                            color: DefaultColor,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 40.0)),
-                  ),
-                  Container(
-                    height: 510,
-                    margin: EdgeInsets.only(top: 150),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CustomTextBox(
-                            controller: _emailAddress,
-                            hint: "Email address",
-                            labelText: 'Email address',
-                            prifixIcon: 'assets/icons/email.png',
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (_emailAddress) {
-                              if (_emailAddress.isEmpty) {
-                                return "Please enter your email address";
-                              }
-                              Validate().validateEmail(_emailAddress);
-                            },
-                          ),
-                          CustomTextBox(
-                            controller: _password,
-                            hint: "Password",
-                            labelText: 'Password',
-                            prifixIcon: 'assets/icons/lock.png',
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
-                            validator: (_password) {
-                              if (_password.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          GestureDetector(
-                            child: CustomButton(
-                              text: "Login",
-                              width: 330.0,
+      body: _loaded
+          ? GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Container(
+                height: double.infinity,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 20, top: 30),
+                          child: Text("Riyasewana",
+                              style: TextStyle(
+                                  fontFamily: DefaultFont,
+                                  color: DefaultColor,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 40.0)),
+                        ),
+                        Container(
+                          height: 510,
+                          margin: EdgeInsets.only(top: 150),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                CustomTextBox(
+                                  controller: _emailAddress,
+                                  hint: "Email address",
+                                  labelText: 'Email address',
+                                  prifixIcon: 'assets/icons/email.png',
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (_emailAddress) {
+                                    if (_emailAddress.isEmpty) {
+                                      return "Please enter your email address";
+                                    }
+                                    Validate().validateEmail(_emailAddress);
+                                  },
+                                ),
+                                CustomTextBox(
+                                  controller: _password,
+                                  hint: "Password",
+                                  labelText: 'Password',
+                                  prifixIcon: 'assets/icons/lock.png',
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: true,
+                                  validator: (_password) {
+                                    if (_password.isEmpty) {
+                                      return "Please enter your password";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                GestureDetector(
+                                  child: CustomButton(
+                                    text: "Login",
+                                    width: 330.0,
+                                  ),
+                                  onTap: () {
+                                    _signin();
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                GestureDetector(
+                                  child: Text(
+                                    "Terms and Conditions",
+                                    style: TextButtonStyle,
+                                  ),
+                                  onTap: () {},
+                                ),
+                                SizedBox(
+                                  height: 70,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterScreen()));
+                                  },
+                                  child: CustomButton2(
+                                    text: "Register",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                GestureDetector(
+                                  child: Image.asset(
+                                      'assets/images/signGoogle.png'),
+                                  onTap: () {
+                                    Fluttertoast.showToast(
+                                      msg: "Coming soon...",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                    );
+                                  },
+                                )
+                              ],
                             ),
-                            onTap: () {
-                              _signin();
-                            },
                           ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          GestureDetector(
-                            child: Text(
-                              "Terms and Conditions",
-                              style: TextButtonStyle,
-                            ),
-                            onTap: () {},
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
-                            },
-                            child: CustomButton2(
-                              text: "Register",
-                            ),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          GestureDetector(
-                            child: Image.asset('assets/images/signGoogle.png'),
-                            onTap: () {
-                              Fluttertoast.showToast(
-                                msg: "Coming soon...",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                              );
-                            },
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
+            )
+          : SpinKitFoldingCube(
+              itemBuilder: (BuildContext context, int index) {
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: index.isEven ? DefaultColor : InactiveColor,
+                  ),
+                );
+              },
             ),
-          ),
-        ),
-      ),
     );
   }
 }
