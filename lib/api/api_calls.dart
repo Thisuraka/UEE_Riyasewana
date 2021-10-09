@@ -98,8 +98,11 @@ class ApiCalls {
     }
   }
 
+  //=================================================================================================
+
   static Future<ApiResponse> partsAd({
     required String token,
+    required String pType,
     required String pCatagory,
     required String pCondition,
     required String pName,
@@ -126,6 +129,7 @@ class ApiCalls {
 
       var data = new Map<String, String>();
       data['pCatagory'] = pCatagory;
+      data['pType'] = pType;
       data["pCondition"] = pCondition;
       data["pName"] = pName;
       data["pPrice"] = pPrice;
@@ -146,6 +150,123 @@ class ApiCalls {
       return response;
     }
   }
+
+  static Future<ApiResponse> userPartsGet({
+    required String uid,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/parts/user/$uid', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> userPartAdGet({
+    required String adID,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/parts/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> partsUpdate({
+    required String token,
+    required String adID,
+    required String pLocation,
+    required String pType,
+    required String pCatagory,
+    required String pCondition,
+    required String pName,
+    required String pPrice,
+    required String pNegotiate,
+    required String pInfo,
+    required List<String> vImages,
+    List<String>? newImages,
+  }) async {
+    try {
+      List<String?> urlPhotos = [];
+
+      if (vImages.isNotEmpty) {
+        vImages.forEach((element) {
+          urlPhotos.add(element);
+        });
+      }
+      if (newImages!.isNotEmpty) {
+        List<CloudinaryResponse> reply = await cloudinary.uploadFiles(
+          filePaths: newImages,
+          resourceType: CloudinaryResourceType.auto,
+          folder: "UEE",
+        );
+        reply.forEach((response) {
+          if (response.isSuccessful) {
+            urlPhotos.add(response.secureUrl);
+          }
+        });
+      }
+
+      var data = new Map<String, String>();
+      data['pLocation'] = pLocation;
+      data["pType"] = pType;
+      data["pCatagory"] = pCatagory;
+      data["pCondition"] = pCondition;
+      data["pName"] = pName;
+      data["pPrice"] = pPrice;
+      data["pNegotiate"] = pNegotiate;
+      data["pInfo"] = pInfo;
+
+      data["images"] = urlPhotos.map((e) => e).toList().join(',');
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.putRequest('/api/parts/$adID',
+          data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> deletePartAd({
+    required String adID,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.deleteRequest('/api/parts/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  //=================================================================================================
 
   static Future<ApiResponse> vehiclesAd({
     required String token,
@@ -198,6 +319,128 @@ class ApiCalls {
 
       return ApiCaller.postRequest('/api/vehicles',
           data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> userVehiclesGet({
+    required String uid,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicles/user/$uid', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> userVehicleAdGet({
+    required String adID,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicles/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> vehiclesUpdate({
+    required String token,
+    required String adID,
+    required String vLocation,
+    required String vType,
+    required String vBrand,
+    required String vCondition,
+    required String vModel,
+    required String vPrice,
+    required String vManf,
+    required String vNegotiate,
+    required String vTransmission,
+    required String vFuel,
+    required String vMilage,
+    required String vInfo,
+    required List<String> vImages,
+    List<String>? newImages,
+  }) async {
+    try {
+      List<String?> urlPhotos = [];
+
+      if (vImages.isNotEmpty) {
+        vImages.forEach((element) {
+          urlPhotos.add(element);
+        });
+      }
+      if (newImages!.isNotEmpty) {
+        List<CloudinaryResponse> reply = await cloudinary.uploadFiles(
+          filePaths: newImages,
+          resourceType: CloudinaryResourceType.auto,
+          folder: "UEE",
+        );
+        reply.forEach((response) {
+          if (response.isSuccessful) {
+            urlPhotos.add(response.secureUrl);
+          }
+        });
+      }
+
+      var data = new Map<String, String>();
+      data['vLocation'] = vLocation;
+      data["vType"] = vType;
+      data["vBrand"] = vBrand;
+      data["vCondition"] = vCondition;
+      data["vModel"] = vModel;
+      data["vManfYear"] = vManf;
+      data["vPrice"] = vPrice;
+      data["vNegotiate"] = vNegotiate;
+      data["vTransType"] = vTransmission;
+      data["vFuelType"] = vFuel;
+      data["vMilage"] = vMilage;
+      data["vInfo"] = vInfo;
+      data["images"] = urlPhotos.map((e) => e).toList().join(',');
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.putRequest('/api/vehicles/$adID',
+          data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> deleteVehicleAd({
+    required String adID,
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.deleteRequest('/api/vehicles/$adID', headers: headers);
     } catch (e) {
       ApiResponse response = ApiResponse();
       response.isSuccess = false;

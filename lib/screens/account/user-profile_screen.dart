@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/api/api_caller.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/account/edit-profile_screen.dart';
 import 'package:riyasewana/screens/parts/add-part_screen.dart';
+import 'package:riyasewana/screens/parts/edit-part_screen.dart';
 import 'package:riyasewana/screens/vehicles/add-vehicle_screen.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:blur/blur.dart';
@@ -15,18 +18,22 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _uid = "";
+  String _token = "";
   String uName = "";
   String _fName = "";
   String _lName = "";
-  String _uid = "";
   String _name = "";
   String _email = "";
   String _phoneNumber = "";
+  List<dynamic> parts = [];
+  List<dynamic> vehicles = [];
 
   String profileImg = 'assets/images/avatar.jpg';
 
   void getUser() async {
     await Settings.getUserID().then((value) => {_uid = value!});
+    await Settings.getAccessToken().then((value) => {_token = value!});
     await Settings.getFName().then((value) => {_fName = value!});
     await Settings.getLName().then((value) => {_lName = value!});
     await Settings.getUserEmail().then((value) => {_email = value!});
@@ -34,11 +41,28 @@ class _UserProfileState extends State<UserProfile> {
 
     uName = _fName + " " + _lName;
     setState(() {});
+    getUserAds();
+  }
+
+  void getUserAds() async {
+    final partsResponse = await ApiCalls.userPartsGet(uid: _uid, token: _token);
+    parts = partsResponse.jsonBody;
+
+    final vehiclesResponse =
+        await ApiCalls.userVehiclesGet(uid: _uid, token: _token);
+    vehicles = vehiclesResponse.jsonBody;
+    setState(() {});
+    // print("============================================================");
+    // print(vehicles);
+    // vehicles.forEach((element) {
+    //   print(element["vModel"]);
+    // });
   }
 
   @override
   void initState() {
     getUser();
+
     super.initState();
   }
 
@@ -175,28 +199,84 @@ class _UserProfileState extends State<UserProfile> {
                 margin: EdgeInsets.only(top: 370),
                 width: double.infinity,
                 height: 550,
-                child: SingleChildScrollView(
-                  child: Column(
+                child: GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    childAspectRatio: (100 / 104),
+                    crossAxisCount: 1,
                     children: [
-                      HorizontalCard(
-                        adImg: 'assets/images/part1.jfif',
-                        adName: "Honda CM125 Tank",
-                        adPrice: "Rs. 10000",
-                        adType: 'Part',
+                      Container(
+                        width: double.infinity,
+                        height: 450,
+                        margin: EdgeInsets.all(10),
+                        child: RefreshIndicator(
+                          onRefresh: _pullRefresh,
+                          child: vehicles.isNotEmpty
+                              ? GridView.count(
+                                  padding: EdgeInsets.all(0),
+                                  scrollDirection: Axis.vertical,
+                                  childAspectRatio: (100 / 31),
+                                  crossAxisCount: 1,
+                                  children: vehicles.map((vehicle) {
+                                    return HorizontalCard(
+                                      adID: vehicle["_id"],
+                                      adImg: (vehicle["vImages"].length > 0)
+                                          ? vehicle["vImages"][0]
+                                          : '',
+                                      adName: (vehicle["vModel"] != null)
+                                          ? vehicle["vModel"]
+                                          : "Name Not Found",
+                                      adPrice: (vehicle["vPrice"] != null)
+                                          ? "Rs. " + vehicle["vPrice"]
+                                          : "--",
+                                      adType: 'Vehicle',
+                                    );
+                                  }).toList(),
+                                )
+                              : Center(child: Text("No vehicles to show")),
+                        ),
                       ),
-                      HorizontalCard(
-                          adImg: 'assets/images/avatar.jpg',
-                          adName: "Misubhshi Evolution VI",
-                          adPrice: "Rs. 900000",
-                          adType: 'Vehicle'),
-                    ],
-                  ),
-                ),
+                      Container(
+                        width: double.infinity,
+                        height: 450,
+                        margin: EdgeInsets.all(10),
+                        child: RefreshIndicator(
+                          onRefresh: _pullRefresh,
+                          child: parts.isNotEmpty
+                              ? GridView.count(
+                                  padding: EdgeInsets.all(0),
+                                  scrollDirection: Axis.vertical,
+                                  childAspectRatio: (100 / 31),
+                                  crossAxisCount: 1,
+                                  children: parts.map((part) {
+                                    return HorizontalCard(
+                                      adID: part["_id"],
+                                      adImg: (part["pImages"].length > 0)
+                                          ? part["pImages"][0]
+                                          : '',
+                                      adName: (part["pName"] != null)
+                                          ? part["pName"]
+                                          : "Name Not Found",
+                                      adPrice: (part["pPrice"] != null)
+                                          ? "Rs. " + part["pPrice"]
+                                          : "--",
+                                      adType: 'Part',
+                                    );
+                                  }).toList(),
+                                )
+                              : Center(child: Text("No parts to show")),
+                        ),
+                      ),
+                    ]),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _pullRefresh() async {
+    getUserAds();
+    setState(() {});
   }
 }

@@ -89,6 +89,7 @@ class _AddPartScreenState extends State<AddPartScreen> {
         final response = await ApiCalls.partsAd(
           token: _token,
           pCatagory: _pCatagory,
+          pType: _pType,
           pCondition: _pCondition,
           pName: _pModel.text,
           pPrice: _price.text,
@@ -108,8 +109,8 @@ class _AddPartScreenState extends State<AddPartScreen> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
           );
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => UserProfile()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => UserProfile()));
 
           _imgPaths.clear();
         } else {

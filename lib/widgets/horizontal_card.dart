@@ -1,26 +1,48 @@
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/parts/edit-part_screen.dart';
 import 'package:riyasewana/screens/vehicles/edit-vehicle_screen.dart';
+import 'package:riyasewana/utils/settings.dart';
 
 import '../../styles.dart';
 import 'package:flutter/material.dart';
 
-class HorizontalCard extends StatelessWidget {
+class HorizontalCard extends StatefulWidget {
+  _HorizontalCardState createState() => _HorizontalCardState();
+  String adID;
   String adImg;
   String adName;
   String adPrice;
   String adType;
 
-  HorizontalCard(
-      {required this.adImg,
-      required this.adName,
-      required this.adPrice,
-      required this.adType});
+  HorizontalCard({
+    required this.adID,
+    this.adImg = '',
+    required this.adName,
+    required this.adPrice,
+    required this.adType,
+  });
+}
+
+class _HorizontalCardState extends State<HorizontalCard> {
+  String _token = "";
+
+  void getUser() async {
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 20, top: 20, right: 20),
+      height: 100,
+      margin: EdgeInsets.only(top: 20, left: 5, right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Button2BorderColor),
@@ -40,28 +62,34 @@ class HorizontalCard extends StatelessWidget {
             width: 100,
             height: 100,
             child: ClipRRect(
-              child: Image.asset(
-                adImg,
-                fit: BoxFit.cover,
-              ),
+              child: widget.adImg.isNotEmpty
+                  ? Image.network(widget.adImg)
+                  : Image.asset(
+                      'assets/images/avatar.jpg',
+                      fit: BoxFit.cover,
+                    ),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           GestureDetector(
             onTap: () => {
-              if (adType == "Part")
+              if (widget.adType == "Part")
                 {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => EditPartScreen(),
+                      builder: (context) => EditPartScreen(
+                        adID: widget.adID,
+                      ),
                     ),
                   ),
                 }
-              else if (adType == "Vehicle")
+              else if (widget.adType == "Vehicle")
                 {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => EditVehicleScreen(),
+                      builder: (context) => EditVehicleScreen(
+                        adID: widget.adID,
+                      ),
                     ),
                   ),
                 }
@@ -70,10 +98,29 @@ class HorizontalCard extends StatelessWidget {
             },
             child: Container(
               margin: EdgeInsets.only(left: 320, top: 5),
+              width: 25,
+              height: 25,
+              child: Image.asset(
+                'assets/icons/edit2.png',
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => {
+              if (widget.adType == "Part")
+                {ApiCalls.deletePartAd(adID: widget.adID, token: _token)}
+              else if (widget.adType == "Vehicle")
+                {ApiCalls.deleteVehicleAd(adID: widget.adID, token: _token)}
+              else
+                {null}
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 320, top: 50),
               width: 30,
               height: 30,
               child: Image.asset(
-                'assets/icons/more.png',
+                'assets/icons/bin.png',
                 fit: BoxFit.fill,
               ),
             ),
@@ -82,7 +129,7 @@ class HorizontalCard extends StatelessWidget {
             width: 190,
             margin: EdgeInsets.only(top: 20, left: 120),
             child: Text(
-              adName,
+              widget.adName,
               style: TextStyle(
                   fontFamily: DefaultFont,
                   color: Colors.black,
@@ -94,7 +141,7 @@ class HorizontalCard extends StatelessWidget {
             width: 190,
             margin: EdgeInsets.only(top: 50, left: 120),
             child: Text(
-              adPrice,
+              widget.adPrice,
               style: TextStyle(
                   fontFamily: DefaultFont,
                   color: Colors.grey[700],

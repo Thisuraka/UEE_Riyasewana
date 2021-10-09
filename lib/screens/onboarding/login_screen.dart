@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               .push(MaterialPageRoute(builder: (context) => HomeScreen()));
         } else {
           Fluttertoast.showToast(
-            msg: "Something went wrong",
+            msg: "Please recheck credentials",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
           );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riyasewana/api/api_calls.dart';
+import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/utils/helper.dart';
 import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
@@ -123,8 +124,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
           );
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => UserProfile()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => UserProfile()));
 
           _imgPaths.clear();
         } else {

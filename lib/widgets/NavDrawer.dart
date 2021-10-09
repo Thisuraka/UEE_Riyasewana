@@ -40,6 +40,8 @@ class _NavDrawerScreen extends State<NavDrawer> {
       await Settings.setUserPhone("");
       await Settings.setUserEmail("");
 
+      setState(() {});
+
       Fluttertoast.showToast(
         msg: "Signed out ...",
         toastLength: Toast.LENGTH_SHORT,
