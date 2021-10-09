@@ -134,7 +134,9 @@ class _VehicleListScreen extends State<VehicleListScreen> {
                               onTap: () => {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => ViewVehicleScreen(),
+                                    builder: (context) => ViewVehicleScreen(
+                                      adID: vehicle["_id"],
+                                    ),
                                   ),
                                 ),
                               },

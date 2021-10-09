@@ -122,8 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () => {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ViewPartScreen(),
+                                          builder: (context) => ViewPartScreen(
+                                            adID: part["_id"],
+                                          ),
                                         ),
                                       ),
                                     },
@@ -192,7 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ViewVehicleScreen(),
+                                              ViewVehicleScreen(
+                                            adID: vehicle["_id"],
+                                          ),
                                         ),
                                       ),
                                     },

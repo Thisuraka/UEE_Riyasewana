@@ -1,32 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/widgets/contact_button.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_slider.dart';
 import 'package:riyasewana/widgets/custom_textboxCol.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:intl/intl.dart';
 import '../../styles.dart';
 
 class ViewPartScreen extends StatefulWidget {
   @override
   _ViewPartScreenState createState() => _ViewPartScreenState();
+
+  String adID = "";
+
+  ViewPartScreen({required this.adID});
 }
 
 String _postDate = "2021-04-21";
-String _pName = "Honda CM125 Tanks";
-String _pPrice = "10,000";
+String _pName = "";
+String _pPrice = "";
 bool _negotiable = true;
-bool _bookmark = true;
+String _pLocation = "";
+String _pCondition = "";
+String _pInfo = "";
+String _posted = "";
 
-List<String> _imgList = [
-  'assets/images/part1.jfif',
-  'assets/images/part2.jfif',
-  'assets/images/part3.jfif',
-];
+bool _bookmark = true;
+List<dynamic> _imgList = [];
 
 class _ViewPartScreenState extends State<ViewPartScreen> {
+  void getAdData() async {
+    // print("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    final response = await ApiCalls.partGet(adID: widget.adID);
+
+    if (response.isSuccess) {
+      _pName = response.jsonBody["pName"];
+      _pPrice = response.jsonBody["pPrice"];
+      _pLocation = response.jsonBody["pLocation"];
+      _pCondition = response.jsonBody["pCondition"];
+      _pInfo = response.jsonBody["pInfo"];
+
+      _imgList = response.jsonBody["pImages"];
+      DateTime date = DateTime.parse(response.jsonBody["updatedAt"]);
+
+      _posted = DateFormat('yyyy-MM-dd').format(date);
+
+      print(_posted);
+
+      if (response.jsonBody['pNegotiate'] == "true") {
+        _negotiable = true;
+      } else {
+        _negotiable = false;
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Something went wrong",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    getAdData();
   }
 
   @override
@@ -49,7 +89,7 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
           ),
         ),
         child: Text(
-          "Posted on " + _postDate,
+          "Posted on " + _posted,
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.bold, color: DefaultColor, fontSize: 15),
@@ -150,12 +190,9 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      CustomColTextbox(header: "Location", info: "Colombo 05"),
-                      CustomColTextbox(header: "Condition", info: "Used"),
-                      CustomColTextbox(
-                          header: "More details",
-                          info:
-                              "CM125 tanks \nFirst one has a bit of rust \nNo brokers \nOriginal Japan"),
+                      CustomColTextbox(header: "Location", info: _pLocation),
+                      CustomColTextbox(header: "Condition", info: _pCondition),
+                      CustomColTextbox(header: "More details", info: _pInfo),
                     ],
                   ),
                 ),

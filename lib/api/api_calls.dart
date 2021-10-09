@@ -465,12 +465,40 @@ class ApiCalls {
     }
   }
 
+  static Future<ApiResponse> partGet({required String adID}) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/parts/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
   static Future<ApiResponse> allVehiclesGet() async {
     try {
       Map<String, String> headers = new Map();
       headers["Accept"] = "multipart/form-data";
 
       return ApiCaller.getRequest('/api/vehicles/', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> vehicleGet({required String adID}) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicles/$adID', headers: headers);
     } catch (e) {
       ApiResponse response = ApiResponse();
       response.isSuccess = false;

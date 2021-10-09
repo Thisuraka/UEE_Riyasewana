@@ -138,7 +138,9 @@ class _PartListScreen extends State<PartListScreen> {
                               onTap: () => {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => ViewPartScreen(),
+                                    builder: (context) => ViewPartScreen(
+                                      adID: part["_id"],
+                                    ),
                                   ),
                                 ),
                               },

@@ -4,7 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../styles.dart';
 
 class CustomSlider extends StatefulWidget {
-  List<String> imgList = [];
+  List<dynamic> imgList = [];
   CustomSlider({Key? key, required this.imgList}) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _CustomSliderState extends State<CustomSlider> {
     final imageGen = List.generate(
       widget.imgList.length,
       (index) => Container(
-          child: Image.asset(
+          child: Image.network(
         widget.imgList[index],
         fit: BoxFit.cover,
       )),
@@ -41,6 +41,7 @@ class _CustomSliderState extends State<CustomSlider> {
           Container(
             child: PageView.builder(
               controller: controller,
+              itemCount: widget.imgList.length,
               itemBuilder: (_, index) {
                 return imageGen[index % imageGen.length];
               },

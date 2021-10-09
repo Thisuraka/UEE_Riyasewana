@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/widgets/contact_button.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_slider.dart';
@@ -9,26 +12,71 @@ import '../../styles.dart';
 class ViewVehicleScreen extends StatefulWidget {
   @override
   _ViewVehicleScreenState createState() => _ViewVehicleScreenState();
+
+  String adID = "";
+  ViewVehicleScreen({required this.adID});
 }
 
 String _postDate = "2021-04-21";
-String _vName = "Nissan Silvia S15 - 1992";
-String _vPrice = "9,400,000";
+String _vBrand = "";
+String _vModel = "";
+String _vPrice = "";
 bool _negotiable = false;
-bool _bookmark = false;
+String _vLocation = "";
+String _vCondition = "";
+String _vManfYear = "";
+String _vTransType = "";
+String _vFuelType = "";
+String _vMilage = "";
+String _vInfo = "";
+String _posted = "";
 
-List<String> _imgList = [
-  'assets/images/car1.jpg',
-  'assets/images/car2.jpg',
-  'assets/images/car3.jpg',
-  'assets/images/car4.jpg',
-  'assets/images/car5.jpg'
-];
+bool _bookmark = true;
+List<dynamic> _imgList = [];
 
 class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
+  void getAdData() async {
+    // print("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    final response = await ApiCalls.vehicleGet(adID: widget.adID);
+
+    if (response.isSuccess) {
+      _vBrand = response.jsonBody["vBrand"];
+      _vModel = response.jsonBody["vModel"];
+      _vModel = response.jsonBody["vModel"];
+      _vPrice = response.jsonBody["vPrice"];
+      _vLocation = response.jsonBody["vLocation"];
+      _vCondition = response.jsonBody["vCondition"];
+      _vManfYear = response.jsonBody["vManfYear"];
+      _vTransType = response.jsonBody["vTransType"];
+      _vFuelType = response.jsonBody["vFuelType"];
+      _vMilage = response.jsonBody["vMilage"];
+      _vInfo = response.jsonBody["vInfo"];
+
+      _imgList = response.jsonBody["vImages"];
+
+      DateTime date = DateTime.parse(response.jsonBody["updatedAt"]);
+
+      _posted = DateFormat('yyyy-MM-dd').format(date);
+
+      if (response.jsonBody['vNegotiate'] == "true") {
+        _negotiable = true;
+      } else {
+        _negotiable = false;
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Something went wrong",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    getAdData();
   }
 
   @override
@@ -51,7 +99,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
           ),
         ),
         child: Text(
-          "Posted on " + _postDate,
+          "Posted on " + _posted,
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.bold, color: DefaultColor, fontSize: 15),
@@ -77,7 +125,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: Text(
-                        _vName,
+                        _vBrand + " " + _vModel,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 19.0,
@@ -152,19 +200,17 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      CustomColTextbox(header: "Location", info: "Colombo 05"),
-                      CustomColTextbox(header: "Brand", info: "Nissan"),
-                      CustomColTextbox(header: "Model", info: "Silvia S15"),
-                      CustomColTextbox(header: "Transmission", info: "Manual"),
-                      CustomColTextbox(header: "Fuel type", info: "Petrol"),
+                      CustomColTextbox(header: "Location", info: _vLocation),
+                      CustomColTextbox(header: "Brand", info: _vBrand),
+                      CustomColTextbox(header: "Model", info: _vModel),
                       CustomColTextbox(
-                          header: "Manufacture year", info: "1992"),
-                      CustomColTextbox(header: "Milage (KM)", info: "155000"),
-                      CustomColTextbox(header: "Condition", info: "Used"),
+                          header: "Transmission", info: _vTransType),
+                      CustomColTextbox(header: "Fuel type", info: _vFuelType),
                       CustomColTextbox(
-                          header: "More details",
-                          info:
-                              "Silhouette body kit imported \nAir suspension \nAir condtion removed \nStaright pipe \nNever drifted "),
+                          header: "Manufacture year", info: _vManfYear),
+                      CustomColTextbox(header: "Milage (KM)", info: _vMilage),
+                      CustomColTextbox(header: "Condition", info: _vCondition),
+                      CustomColTextbox(header: "More details", info: _vInfo),
                     ],
                   ),
                 ),

@@ -61,7 +61,17 @@ const TextButtonStyle = TextStyle(
 );
 
 //Sample text and list
-List<String> LocationList = ["Kandy", "Colombo", "Galle", "Dompe"];
+List<String> LocationList = [
+  "Western",
+  "Central",
+  "Southern",
+  "Eastern",
+  "Nothern",
+  "North-West",
+  "North-Central",
+  "Uva",
+  "Sabaragamuwa"
+];
 List<String> VehcileTypeList = [
   "Bus",
   "Car",
@@ -74,23 +84,46 @@ List<String> VehcileTypeList = [
   "Tuk",
   "Tractor"
 ];
-List<String> VehicleBrandList = ["Toyota", "Honda", "Nissan", "Subrau"];
-List<String> VehicleConditionList = [
-  "Any",
-  "Used",
-  "Registered",
-  "Unregistered"
+List<String> VehicleBrandList = [
+  "Alfa Romeo",
+  "Chevy",
+  "Dodge",
+  "Ford",
+  "GMC",
+  "Honda",
+  "KIA",
+  "Mazda",
+  "Mitsubishi",
+  "Nissan",
+  "Opel",
+  "Renault",
+  "Subrau",
+  "Tesla",
+  "Toyota",
+  "Volvo"
 ];
+List<String> VehicleConditionList = ["Used", "Registered", "Unregistered"];
 List<String> VehicleTransmissionList = ["Any", "Manual", "Automatic", "CVT"];
 List<String> VehicleFuelList = ["Petrol", "Diesel", "Electic", "Hydrogen"];
-List<String> PartTypeList = ["Car", "Van", "Bike", "Truck"];
+List<String> PartTypeList = [
+  "Bus",
+  "Car",
+  "Crew-cab",
+  "Heavy-duty",
+  "Lorry",
+  "Mo-Cycle",
+  "Pickup",
+  "SUV",
+  "Tuk",
+  "Tractor"
+];
 List<String> PartCatagoryList = [
   "Electrical",
   "Component",
   "Accessorie",
   "Other"
 ];
-List<String> PartConditionList = ["Used", "Second-hand"];
+List<String> PartConditionList = ["Brand-new", "Second-hand"];
 
 String sampleHeading = "Lorem ipsum dolor sit amet";
 String samplePara =
