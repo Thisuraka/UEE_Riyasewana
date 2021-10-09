@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/parts/view-part_screen.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/navDrawer.dart';
 import 'package:riyasewana/widgets/bigger_vertical_card.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
@@ -13,11 +15,37 @@ class PartListScreen extends StatefulWidget {
   _PartListScreen createState() => _PartListScreen();
 }
 
-@override
-void initState() {}
-
 class _PartListScreen extends State<PartListScreen> {
   final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  String _profileImg = 'assets/images/avatar.jpg';
+  List<dynamic> parts = [];
+  List<dynamic> vehicles = [];
+  String _token = "";
+  String _uid = "";
+
+  void getUser() async {
+    await Settings.getUserID().then((value) => {_uid = value!});
+    await Settings.getAccessToken().then((value) => {_token = value!});
+
+    getAds();
+  }
+
+  void getAds() async {
+    final partsResponse = await ApiCalls.allPartsGet();
+    parts = partsResponse.jsonBody;
+
+    final vehiclesResponse = await ApiCalls.allVehiclesGet();
+    vehicles = vehiclesResponse.jsonBody;
+    setState(() {});
+    // print("============================================================");
+  }
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String dropdownValue = 'Newest First';
@@ -32,7 +60,7 @@ class _PartListScreen extends State<PartListScreen> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
-              mainTitle: "Vehicles",
+              mainTitle: "Parts",
               leadingImg: true,
               logo: false,
               searchIcon: true,
@@ -97,34 +125,48 @@ class _PartListScreen extends State<PartListScreen> {
                   ),
                 ),
                 Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(top: 40),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: (170 / 220),
-                      children: List.generate(8, (index) {
-                        return GestureDetector(
-                          onTap: () => {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ViewPartScreen(),
+                  height: double.infinity,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 40),
+                  child: vehicles.isNotEmpty
+                      ? GridView.count(
+                          crossAxisCount: 2,
+                          padding: EdgeInsets.all(0),
+                          childAspectRatio: (170 / 220),
+                          children: parts.map((part) {
+                            return GestureDetector(
+                              onTap: () => {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewPartScreen(),
+                                  ),
+                                ),
+                              },
+                              child: Container(
+                                height: 250,
+                                width: 170,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: BigVerticalCard(
+                                  adID: part["_id"],
+                                  adImg: (part["pImages"].length > 0)
+                                      ? part["pImages"][0]
+                                      : '',
+                                  adModel: (part["pName"] != null)
+                                      ? part["pName"]
+                                      : "Name Not Found",
+                                  adCatagory: (part["pCatagory"] != null)
+                                      ? part["pCatagory"]
+                                      : "Name Not Found",
+                                  adPrice: (part["pPrice"] != null)
+                                      ? "Rs. " + part["pPrice"]
+                                      : "--",
+                                ),
                               ),
-                            ),
-                          },
-                          child: Container(
-                            height: 250,
-                            width: 170,
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: BigVerticalCard(
-                              adImg: 'assets/images/avatar.jpg',
-                              adName: "Misubhshi Evolution  " + '$index',
-                              adPrice: "Rs. 900000",
-                            ),
-                          ),
-                        );
-                      }),
-                    ))
+                            );
+                          }).toList(),
+                        )
+                      : Center(child: Text("No vehicles to show")),
+                )
               ],
             ),
           ),

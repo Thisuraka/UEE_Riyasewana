@@ -2,13 +2,19 @@ import '../../styles.dart';
 import 'package:flutter/material.dart';
 
 class BigVerticalCard extends StatelessWidget {
+  String adID;
   String adImg;
-  String adName;
+  String adModel;
+  String adBrand;
+  String adCatagory;
   String adPrice;
 
   BigVerticalCard({
+    required this.adID,
     required this.adImg,
-    required this.adName,
+    this.adBrand = "",
+    this.adModel = "",
+    this.adCatagory = "",
     required this.adPrice,
   });
 
@@ -37,14 +43,19 @@ class BigVerticalCard extends StatelessWidget {
             children: [
               Container(
                 width: 170,
-                height: 150,
+                height: 140,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
-                  child: Image.asset(
-                    adImg,
-                    fit: BoxFit.cover,
-                  ),
+                  child: adImg.isNotEmpty
+                      ? Image.network(
+                          adImg,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          'assets/images/avatar.jpg',
+                          fit: BoxFit.cover,
+                        ),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
@@ -53,22 +64,47 @@ class BigVerticalCard extends StatelessWidget {
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 160, left: 5, right: 2),
+                margin: EdgeInsets.only(top: 150, left: 6, right: 2),
                 child: Text(
-                  adName,
-                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  adModel,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
+              adBrand != ""
+                  ? Container(
+                      height: 30,
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 175, left: 6, right: 2),
+                      child: Text(
+                        adBrand,
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                    )
+                  : Container(),
+              adCatagory != ""
+                  ? Container(
+                      height: 30,
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 175, left: 6, right: 2),
+                      child: Text(
+                        adCatagory,
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                    )
+                  : Container(),
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 190, left: 5, right: 2),
+                margin: EdgeInsets.only(top: 195, left: 6, right: 2),
                 child: Text(
                   adPrice,
                   maxLines: 2,
                   style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                       fontSize: 14),
                 ),
               )

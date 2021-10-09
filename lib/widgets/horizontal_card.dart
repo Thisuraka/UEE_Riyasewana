@@ -10,14 +10,18 @@ class HorizontalCard extends StatefulWidget {
   _HorizontalCardState createState() => _HorizontalCardState();
   String adID;
   String adImg;
-  String adName;
+  String adBrand;
+  String adModel;
+  String adCatagory;
   String adPrice;
   String adType;
 
   HorizontalCard({
     required this.adID,
     this.adImg = '',
-    required this.adName,
+    this.adBrand = '',
+    this.adCatagory = '',
+    required this.adModel,
     required this.adPrice,
     required this.adType,
   });
@@ -127,19 +131,47 @@ class _HorizontalCardState extends State<HorizontalCard> {
           ),
           Container(
             width: 190,
-            margin: EdgeInsets.only(top: 20, left: 120),
+            margin: EdgeInsets.only(top: 10, left: 120),
             child: Text(
-              widget.adName,
+              widget.adModel,
               style: TextStyle(
                   fontFamily: DefaultFont,
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   fontSize: 16.0),
             ),
           ),
           Container(
             width: 190,
-            margin: EdgeInsets.only(top: 50, left: 120),
+            margin: EdgeInsets.only(top: 37, left: 120),
+            child: widget.adBrand != ""
+                ? Text(
+                    widget.adBrand,
+                    style: TextStyle(
+                        fontFamily: DefaultFont,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0),
+                  )
+                : null,
+          ),
+          Container(
+            width: 190,
+            margin: EdgeInsets.only(top: 37, left: 120),
+            child: widget.adCatagory != ""
+                ? Text(
+                    widget.adCatagory,
+                    style: TextStyle(
+                        fontFamily: DefaultFont,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0),
+                  )
+                : null,
+          ),
+          Container(
+            width: 190,
+            margin: EdgeInsets.only(top: 65, left: 120),
             child: Text(
               widget.adPrice,
               style: TextStyle(

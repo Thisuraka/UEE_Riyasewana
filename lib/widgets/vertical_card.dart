@@ -2,12 +2,16 @@ import '../../styles.dart';
 import 'package:flutter/material.dart';
 
 class VerticalCard extends StatelessWidget {
+  String adID;
   String adImg;
   String adName;
   String adPrice;
+  String adCatagory;
 
   VerticalCard({
-    required this.adImg,
+    required this.adID,
+    this.adImg = '',
+    this.adCatagory = '',
     required this.adName,
     required this.adPrice,
   });
@@ -17,8 +21,8 @@ class VerticalCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: 100,
-          height: 180,
+          width: 120,
+          height: 160,
           margin: EdgeInsets.only(left: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -36,15 +40,20 @@ class VerticalCard extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                width: 100,
+                width: 120,
                 height: 90,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
-                  child: Image.asset(
-                    adImg,
-                    fit: BoxFit.cover,
-                  ),
+                  child: adImg.isNotEmpty
+                      ? Image.network(
+                          adImg,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          'assets/images/avatar.jpg',
+                          fit: BoxFit.cover,
+                        ),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
@@ -53,23 +62,34 @@ class VerticalCard extends StatelessWidget {
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 105, left: 4, right: 2),
+                margin: EdgeInsets.only(top: 97, left: 5, right: 2),
                 child: Text(
                   adName,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                height: 30,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 122, left: 5, right: 2),
+                child: Text(
+                  adCatagory,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
               ),
               Container(
                 height: 30,
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 140, left: 4, right: 2),
+                margin: EdgeInsets.only(top: 140, left: 5, right: 2),
                 child: Text(
                   adPrice,
                   maxLines: 2,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12),
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
               )
             ],

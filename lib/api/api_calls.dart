@@ -448,4 +448,34 @@ class ApiCalls {
       return response;
     }
   }
+
+  //=================================================================================================
+
+  static Future<ApiResponse> allPartsGet() async {
+    try {
+      Map<String, String> headers = new Map();
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/parts/', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> allVehiclesGet() async {
+    try {
+      Map<String, String> headers = new Map();
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicles/', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
 }

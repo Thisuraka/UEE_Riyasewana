@@ -42,7 +42,7 @@ class FavoritesScreen extends StatelessWidget {
                             "Vehicle Parts",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                      Container(
+                      /*  Container(
                         height: double.infinity,
                         width: double.infinity,
                         margin: EdgeInsets.only(top: 25),
@@ -58,7 +58,7 @@ class FavoritesScreen extends StatelessWidget {
                             );
                           }),
                         ),
-                      )
+                      ) */
                     ],
                   ),
                 ),
@@ -74,7 +74,7 @@ class FavoritesScreen extends StatelessWidget {
                             "Vehicles",
                             style: TextStyle(fontWeight: FontWeight.w900),
                           )),
-                      Container(
+                      /*  Container(
                         height: double.infinity,
                         width: double.infinity,
                         margin: EdgeInsets.only(top: 25),
@@ -90,7 +90,7 @@ class FavoritesScreen extends StatelessWidget {
                             );
                           }),
                         ),
-                      )
+                      ) */
                     ],
                   ),
                 )

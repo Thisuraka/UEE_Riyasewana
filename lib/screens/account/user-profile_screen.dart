@@ -222,7 +222,10 @@ class _UserProfileState extends State<UserProfile> {
                                       adImg: (vehicle["vImages"].length > 0)
                                           ? vehicle["vImages"][0]
                                           : '',
-                                      adName: (vehicle["vModel"] != null)
+                                      adBrand: (vehicle["vBrand"] != null)
+                                          ? vehicle["vBrand"]
+                                          : "Name Not Found",
+                                      adModel: (vehicle["vModel"] != null)
                                           ? vehicle["vModel"]
                                           : "Name Not Found",
                                       adPrice: (vehicle["vPrice"] != null)
@@ -253,8 +256,11 @@ class _UserProfileState extends State<UserProfile> {
                                       adImg: (part["pImages"].length > 0)
                                           ? part["pImages"][0]
                                           : '',
-                                      adName: (part["pName"] != null)
+                                      adModel: (part["pName"] != null)
                                           ? part["pName"]
+                                          : "Name Not Found",
+                                      adCatagory: (part["pCatagory"] != null)
+                                          ? part["pCatagory"]
                                           : "Name Not Found",
                                       adPrice: (part["pPrice"] != null)
                                           ? "Rs. " + part["pPrice"]
