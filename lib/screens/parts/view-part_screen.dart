@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:riyasewana/api/api_calls.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/contact_button.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_slider.dart';
 import 'package:riyasewana/widgets/custom_textboxCol.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:intl/intl.dart';
 import '../../styles.dart';
 
@@ -29,7 +31,19 @@ String _posted = "";
 bool _bookmark = true;
 List<dynamic> _imgList = [];
 
+String _uid = "";
+String _token = "";
+String _phoneNumber = "";
+
 class _ViewPartScreenState extends State<ViewPartScreen> {
+  void getUser() async {
+    await Settings.getUserID().then((value) => {_uid = value!});
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    await Settings.getUserPhone().then((value) => {_phoneNumber = value!});
+
+    setState(() {});
+  }
+
   void getAdData() async {
     // print("++++++++++++++++++++++++++++++++++++++++++++++++++");
     final response = await ApiCalls.partGet(adID: widget.adID);
@@ -66,6 +80,7 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
   @override
   void initState() {
     super.initState();
+    getUser();
     getAdData();
   }
 
@@ -174,14 +189,14 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
               Container(
                 margin: EdgeInsets.only(top: 330),
                 child: GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {UrlLauncher.launch('tel:+${_phoneNumber}')},
                   child: ContactButton(call: true),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 330, left: 200),
                 child: GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {UrlLauncher.launch('sms:+${_phoneNumber}')},
                   child: ContactButton(call: false),
                 ),
               ),

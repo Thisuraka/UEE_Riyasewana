@@ -86,6 +86,7 @@ List<String> VehcileTypeList = [
 ];
 List<String> VehicleBrandList = [
   "Alfa Romeo",
+  "Benz",
   "Chevy",
   "Dodge",
   "Ford",

@@ -21,12 +21,12 @@ class _UserProfileState extends State<UserProfile> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _uid = "";
   String _token = "";
+  String _phoneNumber = "";
   String uName = "";
   String _fName = "";
   String _lName = "";
   String _name = "";
   String _email = "";
-  String _phoneNumber = "";
   List<dynamic> parts = [];
   List<dynamic> vehicles = [];
   bool _loaded = false;
@@ -188,7 +188,8 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 20, top: 340),
-                      child: Text("Your Ads",
+                      child: Text(
+                          "Your Ads" + "               <-     Swipe     ->",
                           style: TextStyle(
                               color: Colors.grey[600],
                               fontWeight: FontWeight.w500,

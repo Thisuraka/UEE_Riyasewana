@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:riyasewana/api/api_calls.dart';
+import 'package:riyasewana/utils/settings.dart';
 import 'package:riyasewana/widgets/contact_button.dart';
 import 'package:riyasewana/widgets/custom_appbar.dart';
 import 'package:riyasewana/widgets/custom_slider.dart';
 import 'package:riyasewana/widgets/custom_textboxCol.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import '../../styles.dart';
 
 class ViewVehicleScreen extends StatefulWidget {
@@ -35,9 +36,20 @@ String _posted = "";
 bool _bookmark = true;
 List<dynamic> _imgList = [];
 
+String _uid = "";
+String _token = "";
+String _phoneNumber = "";
+
 class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
+  void getUser() async {
+    await Settings.getUserID().then((value) => {_uid = value!});
+    await Settings.getAccessToken().then((value) => {_token = value!});
+    await Settings.getUserPhone().then((value) => {_phoneNumber = value!});
+
+    setState(() {});
+  }
+
   void getAdData() async {
-    // print("++++++++++++++++++++++++++++++++++++++++++++++++++");
     final response = await ApiCalls.vehicleGet(adID: widget.adID);
 
     if (response.isSuccess) {
@@ -185,14 +197,14 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
               Container(
                 margin: EdgeInsets.only(top: 330),
                 child: GestureDetector(
-                  onTap: () => {launch("tel://214324234")},
+                  onTap: () => {UrlLauncher.launch('tel:+${_phoneNumber}')},
                   child: ContactButton(call: true),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 330, left: 200),
                 child: GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {UrlLauncher.launch('sms:+${_phoneNumber}')},
                   child: ContactButton(call: false),
                 ),
               ),
