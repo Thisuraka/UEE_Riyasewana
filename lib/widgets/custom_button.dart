@@ -29,7 +29,14 @@ class _CustomButtonScreen extends State<CustomButton> {
             Color(0xFF2980B9),
           ]),
           borderRadius: BorderRadius.all(Radius.circular(7.0)),
-          border: Border.all(color: Colors.black),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 3,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 13),

@@ -28,7 +28,10 @@ class _CustomAppbarWidgetState extends State<CustomAppbarWidget> {
       leading: widget.leadingImg
           ? GestureDetector(
               onTap: () => {widget.drawerKey!.currentState?.openDrawer()},
-              child: Image.asset('assets/icons/profile-default.png'))
+              child: Image.asset(
+                'assets/icons/menu.jpg',
+              ),
+            )
           : GestureDetector(
               onTap: () => {Navigator.of(context).pop()},
               child: Image.asset('assets/icons/arrow-left.png')),

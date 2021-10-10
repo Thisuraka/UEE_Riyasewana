@@ -70,7 +70,10 @@ class _HorizontalCardState extends State<HorizontalCard> {
             height: 100,
             child: ClipRRect(
               child: widget.adImg.isNotEmpty
-                  ? Image.network(widget.adImg)
+                  ? Image.network(
+                      widget.adImg,
+                      fit: BoxFit.cover,
+                    )
                   : Image.asset(
                       'assets/images/avatar.jpg',
                       fit: BoxFit.cover,

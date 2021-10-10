@@ -506,4 +506,158 @@ class ApiCalls {
       return response;
     }
   }
+
+  //=================================================================================================
+
+  static Future<ApiResponse> checkVehicleFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicle_fav/vehicle/$adID',
+          headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> addVehicleFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      var data = new Map<String, String>();
+      data['vehicle'] = adID;
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.postRequest('/api/vehicle_fav',
+          data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> removeVehicleFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.deleteRequest('/api/vehicle_fav/$adID',
+          headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> checkPartsFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/part_fav/part/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> addPartsFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      var data = new Map<String, String>();
+      data['part'] = adID;
+
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.postRequest('/api/part_fav',
+          data: data, headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> removePartsFav({
+    required String token,
+    required String adID,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.deleteRequest('/api/part_fav/$adID', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> allPartFavs({
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/part_fav/', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
+
+  static Future<ApiResponse> allVehicleFavs({
+    required String token,
+  }) async {
+    try {
+      Map<String, String> headers = new Map();
+      headers['x-access-token'] = token;
+      headers["Accept"] = "multipart/form-data";
+
+      return ApiCaller.getRequest('/api/vehicle_fav', headers: headers);
+    } catch (e) {
+      ApiResponse response = ApiResponse();
+      response.isSuccess = false;
+      response.statusMessage = e.toString();
+      return response;
+    }
+  }
 }

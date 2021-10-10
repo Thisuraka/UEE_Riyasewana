@@ -5,6 +5,7 @@ import 'package:riyasewana/api/api_calls.dart';
 import 'package:riyasewana/screens/account/favorites_screen.dart';
 import 'package:riyasewana/screens/account/user-profile_screen.dart';
 import 'package:riyasewana/screens/home_screen.dart';
+import 'package:riyasewana/screens/onboarding/login_screen.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:riyasewana/utils/settings.dart';
 
@@ -129,11 +130,17 @@ class _NavDrawerScreen extends State<NavDrawer> {
             ),
             title: Text('My favourites'),
             onTap: () => {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => FavoritesScreen(),
-                ),
-              )
+              _signed
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FavoritesScreen(),
+                      ),
+                    )
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    )
             },
           ),
           ListTile(
@@ -142,11 +149,17 @@ class _NavDrawerScreen extends State<NavDrawer> {
             ),
             title: Text('My account'),
             onTap: () => {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => UserProfile(),
-                ),
-              )
+              _signed
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => UserProfile(),
+                      ),
+                    )
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    )
             },
           ),
           Container(

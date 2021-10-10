@@ -33,7 +33,7 @@ String _vMilage = "";
 String _vInfo = "";
 String _posted = "";
 
-bool _bookmark = true;
+bool _bookmark = false;
 List<dynamic> _imgList = [];
 
 String _uid = "";
@@ -86,9 +86,49 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
     setState(() {});
   }
 
+  void checkFav() async {
+    final response =
+        await ApiCalls.checkVehicleFav(adID: widget.adID, token: _token);
+    var res = response.jsonBody;
+    if (res.length > 0) {
+      _bookmark = true;
+    } else {
+      _bookmark = false;
+    }
+    setState(() {});
+  }
+
+  void setFav() async {
+    if (_bookmark) {
+      final response =
+          await ApiCalls.addVehicleFav(adID: widget.adID, token: _token);
+
+      if (response.isSuccess) {
+        Fluttertoast.showToast(
+          msg: "Added to Favorites",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    } else {
+      final response =
+          await ApiCalls.removeVehicleFav(adID: widget.adID, token: _token);
+
+      if (response.isSuccess) {
+        Fluttertoast.showToast(
+          msg: "Removed from Favorites",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    getUser();
+    checkFav();
     getAdData();
   }
 
@@ -180,6 +220,7 @@ class _ViewVehicleScreenState extends State<ViewVehicleScreen> {
                         onTap: () {
                           setState(() {
                             _bookmark = !_bookmark;
+                            setFav();
                           });
                         },
                         child: _bookmark

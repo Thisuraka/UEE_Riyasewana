@@ -41,11 +41,18 @@ class _BottomNavbarState extends State<BottomNavbar> {
         );
         break;
       case 1:
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => FavoritesScreen(),
-          ),
-        );
+        _signed
+            ? Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FavoritesScreen(),
+                ),
+              )
+            : Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
+
         break;
       case 2:
         _signed

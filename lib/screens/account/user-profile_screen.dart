@@ -155,7 +155,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20, top: 260),
+                      margin: EdgeInsets.only(left: 20, top: 235),
                       child: GestureDetector(
                         onTap: () => {
                           Navigator.of(context).push(
@@ -171,7 +171,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 210, top: 260),
+                      margin: EdgeInsets.only(left: 210, top: 235),
                       child: GestureDetector(
                         onTap: () => {
                           Navigator.of(context).push(
@@ -187,103 +187,143 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20, top: 340),
-                      child: Text(
-                          "Your Ads" + "               <-     Swipe     ->",
-                          style: TextStyle(
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17.0)),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 370),
+                      margin: EdgeInsets.only(top: 300),
                       width: double.infinity,
                       height: 550,
                       child: GridView.count(
                           scrollDirection: Axis.horizontal,
-                          childAspectRatio: (100 / 104),
+                          childAspectRatio: (86 / 76),
                           crossAxisCount: 1,
                           children: [
-                            Container(
-                              width: double.infinity,
-                              height: 450,
-                              margin: EdgeInsets.all(10),
-                              child: RefreshIndicator(
-                                onRefresh: _pullRefresh,
-                                child: vehicles.isNotEmpty
-                                    ? GridView.count(
-                                        padding: EdgeInsets.all(0),
-                                        scrollDirection: Axis.vertical,
-                                        childAspectRatio: (100 / 31),
-                                        crossAxisCount: 1,
-                                        children: vehicles.map((vehicle) {
-                                          return HorizontalCard(
-                                            adID: vehicle["_id"],
-                                            adImg:
-                                                (vehicle["vImages"].length > 0)
-                                                    ? vehicle["vImages"][0]
-                                                    : '',
-                                            adBrand: (vehicle["vBrand"] != null)
-                                                ? vehicle["vBrand"]
-                                                : "Name Not Found",
-                                            adModel: (vehicle["vModel"] != null)
-                                                ? vehicle["vModel"]
-                                                : "Name Not Found",
-                                            adPrice: (vehicle["vPrice"] != null)
-                                                ? "Rs. " + vehicle["vPrice"]
-                                                : "--",
-                                            adType: 'Vehicle',
-                                            onChange: (value) {
-                                              if (value) {
-                                                _pullRefresh();
-                                              }
-                                            },
-                                          );
-                                        }).toList(),
-                                      )
-                                    : Center(
-                                        child: Text("No vehicles to show")),
-                              ),
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Text("Vehicles",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 280),
+                                  child: Text("Swipe     --->",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0)),
+                                ),
+                                Container(
+                                  width: 375,
+                                  height: 450,
+                                  margin: EdgeInsets.only(
+                                      top: 20, left: 10, right: 10),
+                                  child: RefreshIndicator(
+                                    onRefresh: _pullRefresh,
+                                    child: vehicles.isNotEmpty
+                                        ? GridView.count(
+                                            padding: EdgeInsets.all(0),
+                                            scrollDirection: Axis.vertical,
+                                            childAspectRatio: (100 / 30),
+                                            crossAxisCount: 1,
+                                            children: vehicles.map((vehicle) {
+                                              return HorizontalCard(
+                                                adID: vehicle["_id"],
+                                                adImg:
+                                                    (vehicle["vImages"].length >
+                                                            0)
+                                                        ? vehicle["vImages"][0]
+                                                        : '',
+                                                adBrand:
+                                                    (vehicle["vBrand"] != null)
+                                                        ? vehicle["vBrand"]
+                                                        : "Name Not Found",
+                                                adModel:
+                                                    (vehicle["vModel"] != null)
+                                                        ? vehicle["vModel"]
+                                                        : "Name Not Found",
+                                                adPrice: (vehicle["vPrice"] !=
+                                                        null)
+                                                    ? "Rs. " + vehicle["vPrice"]
+                                                    : "--",
+                                                adType: 'Vehicle',
+                                                onChange: (value) {
+                                                  if (value) {
+                                                    _pullRefresh();
+                                                  }
+                                                },
+                                              );
+                                            }).toList(),
+                                          )
+                                        : Center(
+                                            child: Text("No vehicles to show")),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Container(
-                              width: double.infinity,
-                              height: 450,
-                              margin: EdgeInsets.all(10),
-                              child: RefreshIndicator(
-                                onRefresh: _pullRefresh,
-                                child: parts.isNotEmpty
-                                    ? GridView.count(
-                                        padding: EdgeInsets.all(0),
-                                        scrollDirection: Axis.vertical,
-                                        childAspectRatio: (100 / 31),
-                                        crossAxisCount: 1,
-                                        children: parts.map((part) {
-                                          return HorizontalCard(
-                                            adID: part["_id"],
-                                            adImg: (part["pImages"].length > 0)
-                                                ? part["pImages"][0]
-                                                : '',
-                                            adModel: (part["pName"] != null)
-                                                ? part["pName"]
-                                                : "Name Not Found",
-                                            adCatagory:
-                                                (part["pCatagory"] != null)
-                                                    ? part["pCatagory"]
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: Text("<---        Swipe",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 320),
+                                  child: Text("Parts",
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0)),
+                                ),
+                                Container(
+                                  width: 375,
+                                  height: 450,
+                                  margin: EdgeInsets.only(
+                                      top: 20, left: 10, right: 10),
+                                  child: RefreshIndicator(
+                                    onRefresh: _pullRefresh,
+                                    child: parts.isNotEmpty
+                                        ? GridView.count(
+                                            padding: EdgeInsets.all(0),
+                                            scrollDirection: Axis.vertical,
+                                            childAspectRatio: (100 / 31),
+                                            crossAxisCount: 1,
+                                            children: parts.map((part) {
+                                              return HorizontalCard(
+                                                adID: part["_id"],
+                                                adImg:
+                                                    (part["pImages"].length > 0)
+                                                        ? part["pImages"][0]
+                                                        : '',
+                                                adModel: (part["pName"] != null)
+                                                    ? part["pName"]
                                                     : "Name Not Found",
-                                            adPrice: (part["pPrice"] != null)
-                                                ? "Rs. " + part["pPrice"]
-                                                : "--",
-                                            adType: 'Part',
-                                            onChange: (value) {
-                                              if (value) {
-                                                _pullRefresh();
-                                              }
-                                            },
-                                          );
-                                        }).toList(),
-                                      )
-                                    : Center(child: Text("No parts to show")),
-                              ),
+                                                adCatagory:
+                                                    (part["pCatagory"] != null)
+                                                        ? part["pCatagory"]
+                                                        : "Name Not Found",
+                                                adPrice: (part["pPrice"] !=
+                                                        null)
+                                                    ? "Rs. " + part["pPrice"]
+                                                    : "--",
+                                                adType: 'Part',
+                                                onChange: (value) {
+                                                  if (value) {
+                                                    _pullRefresh();
+                                                  }
+                                                },
+                                              );
+                                            }).toList(),
+                                          )
+                                        : Center(
+                                            child: Text("No parts to show")),
+                                  ),
+                                ),
+                              ],
                             ),
                           ]),
                     ),

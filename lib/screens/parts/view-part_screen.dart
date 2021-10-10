@@ -45,7 +45,6 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
   }
 
   void getAdData() async {
-    // print("++++++++++++++++++++++++++++++++++++++++++++++++++");
     final response = await ApiCalls.partGet(adID: widget.adID);
 
     if (response.isSuccess) {
@@ -77,10 +76,49 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
     setState(() {});
   }
 
+  void checkFav() async {
+    final response =
+        await ApiCalls.checkPartsFav(adID: widget.adID, token: _token);
+    var res = response.jsonBody;
+    if (res.length > 0) {
+      _bookmark = true;
+    } else {
+      _bookmark = false;
+    }
+    setState(() {});
+  }
+
+  void setFav() async {
+    if (_bookmark) {
+      final response =
+          await ApiCalls.addPartsFav(adID: widget.adID, token: _token);
+
+      if (response.isSuccess) {
+        Fluttertoast.showToast(
+          msg: "Added to Favorites",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    } else {
+      final response =
+          await ApiCalls.removePartsFav(adID: widget.adID, token: _token);
+
+      if (response.isSuccess) {
+        Fluttertoast.showToast(
+          msg: "Removed from Favorites",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getUser();
+    checkFav();
     getAdData();
   }
 
@@ -172,6 +210,7 @@ class _ViewPartScreenState extends State<ViewPartScreen> {
                         onTap: () {
                           setState(() {
                             _bookmark = !_bookmark;
+                            setFav();
                           });
                         },
                         child: _bookmark

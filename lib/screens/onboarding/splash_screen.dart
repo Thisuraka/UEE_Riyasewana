@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:riyasewana/screens/home_screen.dart';
 import 'package:riyasewana/styles.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
-@override
-void initState() {}
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
 
-class SplashScreen extends StatelessWidget {
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 4), () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

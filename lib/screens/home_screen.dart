@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(55),
             child: CustomAppbarWidget(
-              mainTitle: "Latest",
+              mainTitle: "Home",
               leadingImg: true,
               logo: false,
               searchIcon: true,
@@ -189,12 +189,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Container(
                               height: double.infinity,
                               width: double.infinity,
-                              margin: EdgeInsets.only(top: 20),
+                              margin: EdgeInsets.only(top: 30),
                               child: vehicles.isNotEmpty
                                   ? GridView.count(
                                       crossAxisCount: 2,
                                       padding: EdgeInsets.all(0),
-                                      childAspectRatio: (170 / 220),
+                                      childAspectRatio: (180 / 220),
                                       children: vehicles.map((vehicle) {
                                         return GestureDetector(
                                           onTap: () => {
@@ -244,6 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               : SpinKitFoldingCube(
+                  duration: Duration(seconds: 2),
                   itemBuilder: (BuildContext context, int index) {
                     return DecoratedBox(
                       decoration: BoxDecoration(
